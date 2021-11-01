@@ -1,0 +1,18 @@
+- title: Architecture
+  icon: fa-compass-drafting
+  description:  The high-level architecture and design decisions of the Connector
+  button_label: Learn More
+  url: /pages/architecture/
+  
+- title: Connector Documentation
+  icon: fa-book
+  description: The detailed documentation of the Core Container and adjacent components 
+  button_label: Learn More
+  url: /docs/overview
+  
+- title: Roadmap
+  icon: fa-route
+  description:  The Roadmap for the development of the Connector
+  button_label: Learn More
+  url: "#future-roadmap"
+  

@@ -1,0 +1,32 @@
+- text: Overview
+  url: /docs/overview/
+- text: Communication
+  url: /docs/communication/
+  submenu:
+    - text: Message Flows
+      url: /docs/communication-message-flows/
+    - text: IDS Messages
+      url: /docs/communication-ids-messages/
+    - text: Data Workflows
+      url: /docs/communication-workflows/
+- text: Deployment
+  url: /docs/deployment/
+  submenu:
+    - text: Kubernetes
+      url: /docs/deployment-kubernetes/
+- text: Core Container
+  url: /docs/core-container/
+  submenu:
+    - text: API
+      url: /docs/core-container-api/
+    - text: Configuration
+      url: /docs/core-container-configuration/
+    - text: Policy Enforcement Framework
+      url: /docs/core-container-pef/
+- text: Data Apps
+  url: /docs/data-apps/
+  submenu:
+    - text: Build your own
+      url: /docs/data-apps-build/
+    - text: Existing apps
+      url: /docs/data-apps-existing/ 

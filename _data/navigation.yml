@@ -1,0 +1,10 @@
+#Please use the main menu items under the "text"
+
+- text: Home
+  url: /
+- text: Architecture
+  url: /pages/architecture
+- text: Docs
+  url: /docs/overview/
+- text: Contact
+  url: /pages/contact

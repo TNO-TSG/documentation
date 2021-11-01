@@ -1,0 +1,15 @@
+- icon: fa-cloud-arrow-down
+  title: How can I deploy the connector?
+  subtitle: For the default deployments a Kubernetes cluster is required, then the connector can be deployed via the Helm Chart. See <a href="docs/deployment/">the Deployment Docs</a> for more information.
+  
+- icon: fa-headset
+  title: What is your support policy for the TSG?​
+  subtitle: The open-source TSG is provided without formal support. Support by the community is arranged on <a href="https://github.com/TNO-TSG">Github</a>, for direct support by TNO please contact the <a href="/pages/contact">Business Development of TNO</a>.
+  
+- icon: fa-file-lines
+  title: Under what license is the TSG published?
+  subtitle: The license of the TSG is the Apache Software License, Version 2.0.
+  
+- icon: fa-certificate
+  title: What is the certification status of the TSG?
+  subtitle: Currently no formal certification is performed, the certification process will start shortly after open-sourcing the TSG.

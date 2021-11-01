@@ -1,0 +1,18 @@
+- name: Architecture Overview
+  icon: /assets/images/feature-icon.png
+  description: Read the high-level architecture overview of the Connector
+  button_label: Learn More
+  url: /pages/support/
+  
+- name: Account
+  icon: /assets/images/feature-icon2.png
+  description: Pellentesque tempus consectetuer vehicula arcu, neque in mi duis felis vel tincidunt
+  button_label: Create Account
+  url: /pages/register/
+  
+- name: General Help
+  icon: /assets/images/feature-icon3.png
+  description: Pellentesque tempus consectetuer vehicula arcu, neque in mi duis felis vel tincidunt
+  button_label: Contact Us
+  url: /pages/contact/
+  

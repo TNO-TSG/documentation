@@ -1,0 +1,14 @@
+- name: Ask the Community
+  icon: fa-comments
+  description: Ask your questions or discussion in the relevant Github repositories in the TNO-TSG organization
+  button_label: Ask Community
+  url: https://github.com/TNO-TSG
+  animation: fadeInRight
+
+- name: Contact TNO
+  icon: fa-user-tie
+  description: Get in contact with Business Development of TNO
+  button_label: Contact
+  url: /pages/contact/
+  animation: fadeInLeft
+

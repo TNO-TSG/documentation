@@ -1,0 +1,44 @@
+<!-- Start Footer Area -->
+<footer class="footer-area bg-color3">
+    <div class="footer-wrapper section-spacing bminus-30">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-lg-6">
+                    <div class="footer-widget wow fadeIn" data-wow-duration="1s">
+                        <h5 class="footer-title heading-5">About TNO Security Gateway</h5>
+                        <p>The TNO Security Gateway (TSG) is an open-source IDS connector implementation, initially developed at TNO. This site provides explenations of the high-level architecture and the in-depth documentation of the TSG.</p>
+                    </div>
+                </div>
+                <div class="col-md-5 col-lg-3">
+                    <div class="footer-widget wow fadeIn" data-wow-duration="2s">
+                        <h5 class="footer-title heading-5">Pages</h5>
+                        <ul class="footer-category list-inline">
+                            <li><a href="/pages/architecture">Architecture</a></li>
+                            <li><a href="/docs/overview">Docs</a></li>
+                            <li><a href="/pages/contact">Contact </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2 col-lg-3">
+                    <div class="footer-widget wow fadeIn" data-wow-duration="4s">
+                        <h5 class="footer-title heading-5">Follow Us</h5>
+                        <ul class="footer-socials list-inline">
+                            {% if site.github %}
+                                <li class="list-inline-item"><a href="{{site.github}}"><i class="fab fa-github"></i></a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-wrapper">
+        <div class="container">
+            <div class="footer-copyright text-center">
+                <p> &copy; Copyright {{ site.time | date: '%Y' }} TNO</p>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="home-top"><i class="fa fa-angle-down" aria-hidden="true"></i></a>
+</footer>
+<!-- End Footer Area -->

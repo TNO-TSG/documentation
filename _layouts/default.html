@@ -1,0 +1,63 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name='description' content='{% if page.description %}{{ page.description | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}'>
+    <meta name="keywords" content="{% if page.keywords %}{{ page.keywords}}{% else %}{{ site.keywords }}{% endif %}">
+	<!-- Facebook Open Graph -->	
+	<meta content="{{ site.title }}" property="og:site_name">
+	<meta property="og:locale" content="en_US" />
+	{% if page.title %}<meta content="{{ page.title }}" property="og:title">{% else %}<meta content="{{ site.title }}" property="og:title">{% endif %}
+	{% if page.title %}<meta content="article" property="og:type">{% else %}<meta content="website" property="og:type">{% endif %}
+	{% if page.description %}<meta content="{{ page.description }}" property="og:description">{% else %}<meta content="{{ site.description }}" property="og:description">{% endif %}
+	{% if page.url %}<meta content="{{ site.url }}{{ page.url }}" property="og:url">{% endif %}	
+	{% if page.post_image %}<meta content="{{ page.post_image }}" property="og:image">{% else %}<meta content="{{ site.cover_image | relative_url }}" property="og:image">{% endif %}
+	{% if page.tag %}{% for tag in page.tag %}<meta content="{{ tag }}" property="article:tag">{% endfor %}{% endif %}
+	{% if page.categories %}{% for category in page.categories limit:1 %}<meta content="{{ category }}" property="article:section">{% endfor %}{% endif %}
+	{% if page.date %}<meta content="{{ page.date | date_to_xmlschema }}" property="article:published_time">{% endif %}	
+	<!-- Twitter cards -->
+	{% if page.title %}<meta name="twitter:title"   content="{{ page.title }}">{% else %}<meta name="twitter:title"   content="{{ site.title }}">{% endif %}	
+	{% if page.description %}<meta name="twitter:description" content="{{ page.description }}">{% else %}<meta name="twitter:description" content="{{ site.description }}">{% endif %}
+	{% if page.post_image %}<meta name="twitter:card"  content="summary_large_image"><meta name="twitter:image" content="{{ site.url }}{{ page.post_image }}">{% else %}<meta name="twitter:card"  content="summary"><meta name="twitter:image" content="{{ site.cover_image | relative_url }}">{% endif %}
+    <!-- Site Title -->
+    <title>{% if page.title %} {{page.title}} - {% endif %} {{site.title}}</title>
+    <!--  Add Favicon -->
+	
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/images/favicon/apple-touch-icon.png' | relative_url }}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon/favicon-32x32.png' | relative_url }}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/images/favicon/favicon-16x16.png' | relative_url }}">
+	<link rel="manifest" href="{{ '/assets/images/favicon/site.webmanifest' | relative_url }}">
+	<link rel="mask-icon" href="{{ '/assets/images/favicon/safari-pinned-tab.svg' | relative_url }}" color="#5bbad5">
+	<meta name="theme-color" content="#000000">
+
+    <!-- Add CSS File -->
+    <link rel="stylesheet" href="{{ '/assets/css/app.min.css' | relative_url }} "/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
+</head>
+
+<body>
+   {{ content }}
+    <!-- Add Javascript File -->
+   <script src="{{ '/assets/js/build.min.js' | relative_url }}"></script>
+   		<script>
+			$(function() {
+				$('a[href*=\\#]').not(".no-smooth").on('click', function(event){
+					var el = $(this.hash);
+					if (el.length > 0) {
+						// event.preventDefault();
+						$('html,body').animate({scrollTop:$(this.hash).offset().top - 100}, 500);
+					}
+				});
+
+				});
+
+
+		</script>
+</body>      
+</html>

@@ -1,0 +1,130 @@
+---
+layout: default
+---
+
+{% include header.html %}
+{% include doc_post_header.html %}
+<section class="layout-area bg-color1 content tutorial">
+  <div class="layout-wrapper section-spacing bminus-30">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {% include doc_post_breadcrumb.html %}
+        </div>
+      </div>
+      <div class="row">
+	  {% if page.left_menu %}
+
+        <div class="col-md-3">
+          <div class="custom-links">
+            <h5>Documentation</h5>         
+			  <ul class="nav navbar-nav" id="nav">
+			{% for link in site.data.docs_navigation %}
+					{% assign active = nil %}
+
+					{% for sublink in link.submenu %}
+						{% if page.url contains sublink.url %}
+							{% assign active = 'active' %}
+						{% endif %}
+					{% endfor %}
+
+					{% if page.url contains link.url %}
+						{% assign active = 'active' %}
+					{% endif %}
+
+					<li class="subitem display-dropdown {% if page.url == link.url %}active {% endif %}">
+						<a href="{{ link.url | relative_url }}">{{ link.text }}</a>
+            {% if link.submenu %}<a class="pb-0 pt-0 subitem-show"><i class="fa fa-angle-right"></i></a> {% endif %}
+
+						{% if link.submenu %}						
+							 <ul class="sub-dropdown">
+								{% for sublink in link.submenu %}
+									<li {% if page.url contains sublink.url %}class="active"{% endif %}>
+										<a href="{{ sublink.url | relative_url }}">{{ sublink.text }}</a>
+									</li>
+								{% endfor %}
+							</ul>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>			
+          </div>
+        </div>
+		{% endif %}
+		
+		
+		{% assign col = "6" %}
+		
+		{% if page.toc != true %}		
+		{% assign col1 = "3" %}		
+		{% endif %}
+		
+		{% if page.left_menu == false %}
+		{% assign col2 = "3" %} 		
+		{% endif %}	
+		
+		
+        <div class="col-md-{{ col | plus: col1 | plus: col2 }}">
+          <div class="tutorial-content mx-auto">
+            <div class="doc-content">		
+              {{content}}
+            </div>
+          </div>
+        </div>
+		{% if page.toc == true %}
+        <div class="col-md-3">
+          <div class=" doc-sidebar-menu doc-right-sidebar">
+
+            <div>
+              <div id="table-of-contents">
+               <h5 class="px-3 pt-3">Table of Content</h5>
+				 {% include toc.html html=content %}
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+		{% endif %}
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+{% include support_area.html %}
+{% include image_modal.html %}
+{% include footer.html %}
+
+<script>
+  const headings = document.querySelectorAll("h2[id]");
+  for (var i = 0; i < headings.length; i++) {
+    const anchorLink = document.createElement("a");
+    anchorLink.innerText = "#";
+    anchorLink.href = "#" + headings[i].id;
+    anchorLink.classList.add("header-link");
+
+    headings[i].appendChild(anchorLink);
+  }
+  
+  {% if page.toc == true %}
+  const tocs = document.querySelectorAll("#table-of-contents a")
+  function updateActiveToc() {
+    for (var i = 0; i < headings.length; i++) {
+      if (headings[i].getBoundingClientRect().top > 105) {
+        if (!tocs[Math.max(0, i-1)].classList.contains("active")) {
+          tocs.forEach((e) => e.classList.remove("active"))
+          tocs[Math.max(0, i-1)].classList.add("active")
+        }
+        return
+      }
+      if (!tocs[tocs.length-1].classList.contains("active")) {
+          tocs.forEach((e) => e.classList.remove("active"))
+          tocs[tocs.length-1].classList.add("active")
+        }
+    }
+  }
+  window.addEventListener('scroll', updateActiveToc);
+  updateActiveToc();
+  {%endif %}
+</script>
