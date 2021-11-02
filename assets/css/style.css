@@ -492,9 +492,59 @@ h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
   .container.large {
     max-width: 1140px; } }
 
-@media (min-width: 1600px) {
+@media (min-width: 1570px) {
   .container.large {
     max-width: 1400px; } }
+
+@media (min-width: 1570px) {
+  /* expanding BS4 max-width */
+  .container {
+    max-width: 1540px; }
+  /* grid columns xxl */
+  .col-xxl {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%; }
+  .col-xxl-auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: none; }
+  .col-xxl-1 {
+    flex: 0 0 8.333333%;
+    max-width: 8.333333%; }
+  .col-xxl-2 {
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%; }
+  .col-xxl-3 {
+    flex: 0 0 25%;
+    max-width: 25%; }
+  .col-xxl-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%; }
+  .col-xxl-5 {
+    flex: 0 0 41.666667%;
+    max-width: 41.666667%; }
+  .col-xxl-6 {
+    flex: 0 0 50%;
+    max-width: 50%; }
+  .col-xxl-7 {
+    flex: 0 0 58.333333%;
+    max-width: 58.333333%; }
+  .col-xxl-8 {
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%; }
+  .col-xxl-9 {
+    flex: 0 0 75%;
+    max-width: 75%; }
+  .col-xxl-10 {
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%; }
+  .col-xxl-11 {
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%; }
+  .col-xxl-12 {
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%; } }
 
 .image-modal {
   cursor: pointer; }
@@ -1839,23 +1889,25 @@ select:hover {
     -webkit-column-break-inside: avoid;
     overflow: visible; }
 
-.doc-sidebar-menu {
-  width: 280px; }
-  .doc-sidebar-menu ul {
-    list-style: none;
-    padding: 0;
-    display: block; }
-  .doc-sidebar-menu li a {
-    border-bottom: 1px solid #cbdbef;
-    display: block;
-    padding: 5px 15px;
-    background: #f2f6fb;
-    line-height: 2;
-    -webkit-transition: 0.1s ease;
-    -ms-transform: 0.1s ease;
-    transition: 0.1s ease; }
-    .doc-sidebar-menu li a.active {
-      font-weight: bold; }
+.doc-sidebar-menu ul {
+  list-style: none;
+  padding: 0;
+  display: block; }
+  .doc-sidebar-menu ul ul {
+    font-size: 0.9rem;
+    padding-left: 1rem; }
+
+.doc-sidebar-menu li a {
+  border-bottom: 1px solid #cbdbef;
+  display: block;
+  padding: 5px 15px;
+  background: #f2f6fb;
+  line-height: 2;
+  -webkit-transition: 0.1s ease;
+  -ms-transform: 0.1s ease;
+  transition: 0.1s ease; }
+  .doc-sidebar-menu li a.active {
+    font-weight: bold; }
 
 .tutorial .sidebar {
   display: none;
@@ -1873,14 +1925,14 @@ select:hover {
   .tutorial .sidebar {
     display: block; } }
 
-h2 a.header-link {
+h2 a.header-link, h3 a.header-link {
   text-decoration: none;
   color: #ccc;
   opacity: 0;
   transition: opacity ease 0.2s, color ease 0.2s;
   vertical-align: bottom;
   margin: 0 0 0 5px; }
-  h2 a.header-link:hover {
+  h2 a.header-link:hover, h3 a.header-link:hover {
     color: #4a4a4a;
     opacity: 0.4;
     transition: opacity ease 0.2s, color ease 0.2s; }

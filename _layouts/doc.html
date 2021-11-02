@@ -6,7 +6,7 @@ layout: default
 {% include doc_post_header.html %}
 <section class="layout-area bg-color1 content tutorial">
   <div class="layout-wrapper section-spacing bminus-30">
-    <div class="container">
+    <div class="container large">
       <div class="row">
         <div class="col-md-12">
           {% include doc_post_breadcrumb.html %}
@@ -15,7 +15,7 @@ layout: default
       <div class="row">
 	  {% if page.left_menu %}
 
-        <div class="col-md-3">
+        <div class="col-lg-3 col-xxl-2">
           <div class="custom-links">
             <h5>Documentation</h5>         
 			  <ul class="nav navbar-nav" id="nav">
@@ -54,17 +54,20 @@ layout: default
 		
 		
 		{% assign col = "6" %}
+    {% assign col-xxl = "8" %}
 		
 		{% if page.toc != true %}		
-		{% assign col1 = "3" %}		
+		{% assign col1 = "3" %}
+		{% assign col-xxl1 = "2" %}
 		{% endif %}
 		
 		{% if page.left_menu == false %}
-		{% assign col2 = "3" %} 		
+		{% assign col2 = "3" %}
+		{% assign col-xxl2 = "2" %}
 		{% endif %}	
 		
 		
-        <div class="col-md-{{ col | plus: col1 | plus: col2 }}">
+        <div class="col-lg-{{ col | plus: col1 | plus: col2 }} col-xxl-{{ col-xxl | plus: col-xxl1 | plus: col-xxl2 }}">
           <div class="tutorial-content mx-auto">
             <div class="doc-content">		
               {{content}}
@@ -72,13 +75,13 @@ layout: default
           </div>
         </div>
 		{% if page.toc == true %}
-        <div class="col-md-3">
+        <div class="col-lg-3 col-xxl-2">
           <div class=" doc-sidebar-menu doc-right-sidebar">
 
             <div>
               <div id="table-of-contents">
                <h5 class="px-3 pt-3">Table of Content</h5>
-				 {% include toc.html html=content %}
+				 {% include toc.html html=content h_min=2 h_max=3 %}
               </div>
 
             </div>
@@ -95,9 +98,33 @@ layout: default
 {% include support_area.html %}
 {% include image_modal.html %}
 {% include footer.html %}
-
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 <script>
-  const headings = document.querySelectorAll("h2[id]");
+  mermaid.initialize({ 
+    startOnLoad: true, 
+    theme: 'base', themeVariables: {
+      primaryColor: '#4ba5f1',
+      primaryBorderColor: '#0b5595',
+      secondaryColor: '#4ba5f1',
+      tertiaryColor: '#4ba5f1',
+      primaryTextColor: '#FFFFFF',
+      textColor: '#404040',
+      fontFamily: 'Poppins,sans-serif'
+    },
+    sequence: {
+      actorFontFamily: 'Poppins,sans-serif',
+      actorFontWeight: 600,
+      actorFontSize: 16,
+      noteFontFamily: 'Poppins,sans-serif',
+      messageFontFamily: 'Poppins,sans-serif',
+      messageFontWeight: 100,
+      mirrorActors: false,
+      rightAngles: true,
+      showSequenceNumbers: true
+    }
+  });
+
+  const headings = document.querySelectorAll("h2[id], h3[id]");
   for (var i = 0; i < headings.length; i++) {
     const anchorLink = document.createElement("a");
     anchorLink.innerText = "#";
@@ -128,3 +155,10 @@ layout: default
   updateActiveToc();
   {%endif %}
 </script>
+<style>
+.mermaid svg > text.messageText {
+  filter: drop-shadow(0px 0px 2px #FFF);
+  stroke-width: 0;
+  font-weight: 500 !important;
+}
+</style>
