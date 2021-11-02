@@ -12,11 +12,11 @@ title: "TNO Security Gateway Documentation"
 email: "maarten.kollenstart@tno.nl"
 description: "TNO Security Gateway Documentation with as main component the IDS Connector"
 keywords: "security gateway, ids, connector, ids connector, tno, gaia-x"
-baseurl: /documentation/
+baseurl: ""
 url: https://tno-tsg.github.io
 domain: tno-tsg.github.io
 cover_image: "/assets/images/cover_image.png"
-github: "https://www.github.com"
+github: "https://www.github.com/TNO-TSG"
 
 ## Theme Options
 animated_header: true
