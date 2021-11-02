@@ -26,15 +26,15 @@ sequenceDiagram
     participant TSG as TSG Core Container
     participant Broker as Broker
     activate TSG
-    alt
-    TSG-->>TSG: [ResourceManager] Self-Description change
-    else
-    TSG-->>TSG: [interval] Keep-alive Self-Description Publish
+    alt Change Event
+    TSG->>TSG: [ResourceManager] Self-Description change
+    else Interval
+    TSG->>TSG: [interval] Keep-alive Self-Description Publish
     end
-    TSG-->>TSG: Generate Self-Description
+    TSG->>TSG: Generate Self-Description
     activate Broker
-    TSG-->>Broker: ConnectorUpdateMessage
-    Broker-->>Broker: Persist Self-Description
+    TSG->>Broker: ConnectorUpdateMessage
+    Broker->>Broker: Persist Self-Description
     Broker-->>TSG: MessageProcessedNotification
     deactivate Broker 
     deactivate TSG
@@ -48,19 +48,19 @@ sequenceDiagram
     participant TSG as TSG Core Container
     participant Broker as Broker
     activate TSG
-    alt
-    User-->>TSG: /api/description/query<br />{SPARQL Query}
-    TSG-->>TSG: Construct QueryMessage
-    else
-    DA-->>TSG: QueryMessage<br />{SPARQL Query}
+    alt User Interface
+    User->>TSG: /api/description/query<br />{SPARQL Query}
+    TSG->>TSG: Construct QueryMessage
+    else Data App
+    DA->>TSG: QueryMessage<br />{SPARQL Query}
     end
     activate Broker
-    TSG-->>Broker: QueryMessage<br />{SPARQL Query}
-    Broker-->>Broker: Query Backend
+    TSG->>Broker: QueryMessage<br />{SPARQL Query}
+    Broker->>Broker: Query Backend
     Broker-->>TSG: ResultMessage<br />{SPARQL Result | JSON-LD}
-    alt
+    alt User Interface
     TSG-->>User: SPARQL Result
-    else
+    else Data App
     TSG-->>DA: ResultMessage<br />{SPARQL Result | JSON-LD}
     end
     deactivate Broker 
@@ -129,33 +129,33 @@ sequenceDiagram
     participant DA as Data App
     participant TSGC as Consumer TSG Core Container
     participant TSGP as Provider TSG Core Container
-    alt
+    alt User Interface
     activate User
     activate TSGC
-    User-->>TSGC: /api/artifacts/consumer/contractRequest<br />{connectorId}, {contractOffer | JSON-LD}, {accessUrl}
-    TSGC-->>TSGC: Construct ContractRequestMessage
-    else
+    User->>TSGC: /api/artifacts/consumer/contractRequest<br />{connectorId}, {contractOffer | JSON-LD}, {accessUrl}
+    TSGC->>TSGC: Construct ContractRequestMessage
+    else Data App
     activate DA
-    DA-->>TSGC: ContractRequestMessage<br />{ContractRequest | JSON-LD}
+    DA->>TSGC: ContractRequestMessage<br />{ContractRequest | JSON-LD}
     end
     activate TSGP
-    TSGC-->>TSGP: ContractRequestMessage<br />{ContractRequest | JSON-LD}
-    TSGP-->>TSGP: Evaluate ContractRequest
+    TSGC->>TSGP: ContractRequestMessage<br />{ContractRequest | JSON-LD}
+    TSGP->>TSGP: Evaluate ContractRequest
     alt Contract Accepted
     TSGP-->>TSGC: ContractAgreementMessage<br />{ContractAgreement | JSON-LD}
-    TSGC-->>TSGP: ContractAgreementMessage<br />{ContractAgreement | JSON-LD}
+    TSGC->>TSGP: ContractAgreementMessage<br />{ContractAgreement | JSON-LD}
     TSGP-->>TSGC: MessageProcessedNotification
-    alt
+    alt User Interface
     deactivate TSGP
     TSGC-->>User: ContractAgreement
-    else
+    else Data App
     TSGC-->>DA: ContractAgreementMessage<br />{ContractAgreement | JSON-LD}
     end
-    else
+    else Contract Rejected
     TSGP-->>TSGC: ContractRejectionMessage<br />{ContractRejection | JSON-LD}
-    alt
+    alt User Interface
     TSGC-->>User: ContractRejection
-    else
+    else Data App
     TSGC-->>DA: ContractRejectionMessage<br />{ContractRejection | JSON-LD}
     end
     end    
