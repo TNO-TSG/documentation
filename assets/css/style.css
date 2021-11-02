@@ -555,6 +555,23 @@ h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
     max-height: 90vh;
     padding: 1rem; }
 
+.doc-content a > code {
+  word-break: normal; }
+
+.doc-content table {
+  margin: 1rem; }
+  .doc-content table > thead {
+    color: #0D65B0;
+    background: #f2f6fb; }
+    .doc-content table > thead th {
+      border-bottom: 3px solid #cbdbef; }
+  .doc-content table > tbody td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2); }
+  .doc-content table > tbody tr:nth-child(even) {
+    background: rgba(0, 0, 0, 0.01); }
+  .doc-content table td, .doc-content table th {
+    padding: 0.5rem; }
+
 /**
 * ============================
 *  7.0 Header Area

@@ -100,6 +100,33 @@ INDEX SASS
   }
 }
 
+.doc-content {
+  a > code {
+    word-break: normal;
+  }
+  table {
+    margin: 1rem;
+    > thead {
+      color: $font-color3;
+      background: $bg-color3;
+      th {
+          border-bottom: 3px solid darken($bg-color3, 10%);
+      }
+    }
+    > tbody {
+      td {
+          border-bottom: 1px solid rgba(0,0,0,0.2);
+      }
+      tr:nth-child(even) {
+          background: rgba(0,0,0,0.01);
+      }
+    }
+    td, th {
+      padding: 0.5rem;
+    }
+  }
+}
+
 /**
 * ============================
 *  7.0 Header Area

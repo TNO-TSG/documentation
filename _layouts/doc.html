@@ -164,4 +164,10 @@ layout: default
 .mermaid svg .loopText, .mermaid svg .loopText > tspan {
     fill: #404040 !important;
 }
+.mermaid svg path[marker-start="url(#sequencenumber)"] {
+    transform: translate(0, 5px);
+}
+.mermaid svg path[marker-start="url(#sequencenumber)"] + text {
+    transform: translate(0, 5px);
+}
 </style>
