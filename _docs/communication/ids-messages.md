@@ -9,7 +9,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in suscipit odio
 
 ## Overview
 > IDS Messages: Request, Response, Notification
-> See [Message Descriptions](http://htmlpreview.github.io/?https://github.com/International-Data-Spaces-Association/InformationModel/blob/feature/message_taxonomy_description/model/communication/Message_Description.htm)
+> See [Information Model Message Descriptions v4.1.0](http://htmlpreview.github.io/?https://github.com/International-Data-Spaces-Association/InformationModel/blob/feature/message_taxonomy_description/model/communication/Message_Description.htm)
 
 | Property | Cardinality | Description |
 | --- | --- | --- |

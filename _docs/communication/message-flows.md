@@ -17,6 +17,32 @@ Fusce mollis est ipsum, eget condimentum magna ultricies nec. Vivamus non metus 
 ## Self Description
 Aliquam viverra, nibh non finibus fermentum, felis velit aliquam ligula, eget condimentum enim enim a neque. Nunc orci augue, interdum eget nulla eu, sagittis commodo felis. Integer imperdiet egestas nibh, nec accumsan tortor sagittis a. Praesent ac ligula convallis ex rhoncus commodo vitae eget nibh. Sed nec fermentum odio, at mollis ipsum. Vestibulum consequat a odio eget pharetra. Aliquam nibh nisl, bibendum et accumsan vel, interdum eget neque. In hac habitasse platea dictumst.
 
+<div class="mermaid">
+sequenceDiagram
+    actor User
+    participant DA as Data App
+    participant TSGC as Consumer TSG Core Container
+    participant TSGP as Provider TSG Core Container
+    activate TSGC
+    alt User Interface
+    User->>TSGC: /api/description<br />{connectorId}, {accessUrl},<br />{requestedElement?}, {Accept? | Header}
+    TSGC->>TSGC: Construct DescriptionRequestMessage
+    else Data App
+    DA->>TSGC: DescriptionRequestMessage
+    end
+    activate TSGP
+    TSGC->>TSGP: DescriptionRequestMessage
+    TSGP->>TSGP: Process Request
+    TSGP-->>TSGC: DescriptionResponseMessage<br />{RequestedElement | JSON-LD}
+    alt User Interface
+    TSGC-->>User: RequestedElement
+    else Data App
+    TSGC-->>DA: DescriptionResponseMessage<br />{RequestedElement | JSON-LD}
+    end
+    deactivate TSGP 
+    deactivate TSGC
+</div>
+
 ## Broker
 Nulla faucibus luctus eros, sed iaculis erat vestibulum non. Morbi varius dictum erat sed varius. Aenean in dui nisi. Nunc feugiat a mauris non porttitor. Donec iaculis felis a ante fermentum fermentum. Cras tortor lacus, consequat ac mauris quis, sagittis aliquet est. Donec fermentum nec metus et iaculis. Mauris cursus molestie urna, id accumsan ipsum. Praesent urna justo, luctus vitae interdum at, aliquet non tellus.
 

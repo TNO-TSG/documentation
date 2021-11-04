@@ -537,14 +537,14 @@ h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
     flex: 0 0 75%;
     max-width: 75%; }
   .col-xxl-10 {
-    flex: 0 0 16.666667%;
-    max-width: 16.666667%; }
+    flex: 0 0 83.333333%;
+    max-width: 83.333333%; }
   .col-xxl-11 {
-    flex: 0 0 16.666667%;
-    max-width: 16.666667%; }
+    flex: 0 0 91.666667%;
+    max-width: 91.666667%; }
   .col-xxl-12 {
-    flex: 0 0 16.666667%;
-    max-width: 16.666667%; } }
+    flex: 0 0 100%;
+    max-width: 100%; } }
 
 .image-modal {
   cursor: pointer; }
