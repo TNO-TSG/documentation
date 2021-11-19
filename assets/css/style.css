@@ -558,6 +558,9 @@ h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
 .doc-content a > code {
   word-break: normal; }
 
+.doc-content code.no-break {
+  word-break: normal; }
+
 .doc-content table {
   margin: 1rem; }
   .doc-content table > thead {
@@ -1955,10 +1958,12 @@ h2 a.header-link, h3 a.header-link {
     transition: opacity ease 0.2s, color ease 0.2s; }
 
 .doc-content a {
-  color: #084375; }
+  color: #0f7ad4; }
+  .doc-content a:hover {
+    color: #084375; }
 
 .doc-content blockquote {
-  padding-left: 1rem;
+  padding: 0 1rem;
   border-left: rgba(0, 0, 0, 0.2) solid 4px;
   background: rgba(0, 0, 0, 0.03); }
 

@@ -104,6 +104,9 @@ INDEX SASS
   a > code {
     word-break: normal;
   }
+  code.no-break {
+    word-break: normal;
+  }
   table {
     margin: 1rem;
     > thead {
@@ -1800,10 +1803,13 @@ h2 a.header-link, h3 a.header-link {
   }
 }
 .doc-content a {
-  color: $hover-color;
+  color: lighten($hover-color, 20%);
+  &:hover {
+    color: $hover-color;
+  }
 }
 .doc-content blockquote {
-  padding-left: 1rem;
+  padding: 0 1rem;
   border-left: rgba(0,0,0,0.2) solid 4px;
   background: rgba(0,0,0,0.03);
 }
