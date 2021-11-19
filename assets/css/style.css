@@ -575,6 +575,10 @@ h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
   .doc-content table td, .doc-content table th {
     padding: 0.5rem; }
 
+.doc-content .highlight {
+  margin-bottom: 0.5rem;
+  padding: 0.25rem 1rem; }
+
 /**
 * ============================
 *  7.0 Header Area
