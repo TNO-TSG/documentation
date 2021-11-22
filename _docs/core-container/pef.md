@@ -97,7 +97,7 @@ Currently, the automated policy negotiation does not support asking an Administr
 
 For the examples, the Policy Classes as defined in the [Usage Control in the IDS](https://internationaldataspaces.org/wp-content/uploads/dlm_uploads/IDSA-Position-Paper-Usage-Control-in-the-IDS-V3..pdf) Position Paper are used. For clarity reasons, the examples might show only a part of the `ids:Contract` that is relevant for the policy class.
 
-#### Allow or inhibit the usage of the data
+#### 1. Allow or inhibit the usage of the data
 This class of policy is an abstract category that either gives permission or prohibits a specified IDS Data Consumer to operate specified action(s) on the Data Asset without further restrictions. As mentioned before, the action "use" is a very generic action that is utilized to express all targeted usages and therefore, includes fine-grained actions such as "read", "distribute", "print", "delete", "display", and so on. When the permission to “use” the data is issued, the Data Consumer is allowed to operate any of the aforementioned actions on the data. In order to restrict the type of the actions that are allowed to be operated, the policy must address a particular action. For example, in a whitelisting approach, you want to allow your Data Consumer to read and display the data, therefore, you specify a policy that only permits the “read” and “display” actions.
 
 <details>
@@ -160,7 +160,7 @@ This class of policy is an abstract category that either gives permission or pro
 </div>
 </details>
 
-#### Restrict the data usage to specific connectors
+#### 2. Restrict the data usage to specific connectors
 The context of IDS allows assigning more than one connector to a particular IDS party. Therefore, this class of policy addresses the condition of restricting the usage of data to specific connectors of the specified IDS Data Consumer. 
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF, which assumes `assignee` and `assigner` to be connector identifier instead of participant identifiers
@@ -207,7 +207,7 @@ The context of IDS allows assigning more than one connector to a particular IDS 
 </div>
 </details>
 
-#### Restrict the data usage to a group of systems or applications
+#### 3. Restrict the data usage to a group of systems or applications
 The Data Usage Control scenarios demand further restrictions on the policies that either allow or inhibit the usage of data. In order to apply the requested restrictions such as restricting the data usage into the specific systems, the corresponding policy conditions are specified. This implies that the usage of the data is permitted or prohibited when the specified conditions are met. In a policy, the conditions are indeed the prerequisite to operate the action. For example, you can instantiate a policy of this class that allows only a specified risk management system or application to use your data. This policy class faces few limitations, i.e., in order to evaluate the conditions, it requires that the systems and the applications be certified. Thus, a Data Usage Control technology can validate the certifications and enforce the policy.
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF
@@ -270,7 +270,7 @@ The Data Usage Control scenarios demand further restrictions on the policies tha
 </div>
 </details>
 
-#### Restrict the data usage to a group of users
+#### 4. Restrict the data usage to a group of users
 Additionally, an IDS Data Provider may demand to restrict the usage of the data to a specific group of users. This condition addresses either the membership or the role of the users. In order to enforce such a policy, a Data Usage Control technology has to check whether a user is a member of the specified organization or has a specific role from authorized resources. 
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF
@@ -339,7 +339,7 @@ Additionally, an IDS Data Provider may demand to restrict the usage of the data 
 </div>
 </details>
 
-#### Restrict the data usage to specific locations
+#### 5. Restrict the data usage to specific locations
 This class of policy addresses the restriction on the location of the Data Consumer. This condition refines the permitted or prohibited locations of the Data Consumers by region or bounding polygons. A bounding polygon shapes an area by indicating a set of geographical points. A policy may allow a specified Data Consumer to use data only when the assigned connector is located within the permitted area.
 
 <details>
@@ -384,7 +384,7 @@ This class of policy addresses the restriction on the location of the Data Consu
 </div>
 </details>
 
-#### Restrict the data usage for specific purposes
+#### 6. Restrict the data usage for specific purposes
 This category represents another highly demanded class of policy that restricts the usage of data to specific purposes. In order to formulate the purpose of usage in a policy and later on, enforce it to the system, we need to define licenses and certifications. This concept is still evolving in the context of International Data Spaces. “If the purpose is risk management, then allow the usage of data and else if the purpose is marketing, then inhibit the usage of data” is an example policy that is instantiated from this policy class. 
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF, which assumes a Camel header to be set for exchanging purpose information instead of using a PIP.
@@ -434,7 +434,7 @@ This category represents another highly demanded class of policy that restricts 
 </div>
 </details>
 
-#### Restrict the data usage when a specific event has occurred
+#### 7. Restrict the data usage when a specific event has occurred
 This class of policy represents the permission or prohibition of using data under specific conditions; in the circumstances that the usage of data must be restricted due to the occurrences of specific events, a policy of this type can be constructed. Similar to the previous classes and in order to specify policies such as “if an accident occurred, provide permission to read the geographic location” or “provide permission to a Data Consumer to use the data during the exhibition”, we need to formulate the events. Therefore, a Data Provider can specify the conditions that address “when accident occurred” or “during the exhibition”. The assumption is that a set of possible events are defined in the context of International Data Spaces and are available to the ones who specify the policies. As a result, a data usage control technology is able to interpret the events and restrict the data usage accordingly. 
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF, the PIP interaction is not supported right now.
@@ -484,7 +484,7 @@ This class of policy represents the permission or prohibition of using data unde
 </div>
 </details>
 
-#### Restrict the data usage to the security level of the connectors
+#### 8. Restrict the data usage to the security level of the connectors
 The information model of IDS differentiates the connectors with respect to their security levels (i.e., base, trust and trust plus). This class of policy addresses the condition of restricting the usage of data to the security level of the connectors. Depending on what is specified in the condition, an assigned connector of a Data Consumer is allowed to use the data. 
 
 <details>
@@ -545,7 +545,7 @@ The information model of IDS differentiates the connectors with respect to their
 </div>
 </details>
 
-#### Restrict the data usage to a specific time interval 
+#### 9. Restrict the data usage to a specific time interval 
 The International Data Spaces customers require further time-based constraints, i.e., allow or inhibit the usage of data in a specified time interval. A policy, for example, specifies the permission to use the data from the beginning of September 2019 to the end of November 2019. The date and time conditions can be expressed in different ways. However, it is important that the system is able to interpret the date and time conditions that are specified in the policies. For example, if “xsd:dateTimeStamp” is used as the data type that defines the date and time in the policy, the system must also be able to read it and understand it. 
 
 <details>
@@ -608,7 +608,7 @@ The International Data Spaces customers require further time-based constraints, 
 </div>
 </details>
 
-#### Restrict the data usage to a specific time duration
+#### 10. Restrict the data usage to a specific time duration
 Another time-based constraint is to restrict the usage of data to a specific duration of time. For example, an instantiated policy from this policy class may allow a Data Consumer to use the data for a duration of three months. The permitted period may start from a given date and time. Moreover, the corresponding data type (e.g. “xsd:duration”) must be interpreted the same in all systems.
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF.
@@ -656,7 +656,7 @@ Another time-based constraint is to restrict the usage of data to a specific dur
 </div>
 </details>
 
-#### Use the data not more than N times
+#### 11. Use the data not more than N times
 This class of policy demands to restrict the numeric count of executions of the action. For example, a policy specifies that the data can be printed only once or it can be displayed not more than ten times or in total, data cannot be used more than N times. We can only apply this kind of policies to the cases in which, the usage of data is countable. Therefore, a mechanism is needed that counts the usage of data and store it securely and locally, in order to enforce such a policy. 
 
 > _**NOTE**_: Only supported when re-requesting the data from the Provider, not when the usage is local to the consumer.
@@ -704,7 +704,7 @@ This class of policy demands to restrict the numeric count of executions of the 
 </div>
 </details>
 
-#### Use data and delete it after
+#### 12. Use data and delete it after
 This class of policy gives permission to a specified IDS Data Consumer to use the Data Asset and requires the Data Consumer to delete the data after. A policy of this type shall be refined to clarify when the data must be deleted; it shall be immediately after the usage or after a delay period or before a specified date and time.
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF, the DELETE duty must be supported by Data Apps using the data.
@@ -751,7 +751,7 @@ This class of policy gives permission to a specified IDS Data Consumer to use th
 </div>
 </details>
 
-#### Modify data (in transit)
+#### 13. Modify data (in transit)
 In all aforementioned cases, the policies allow the users to use the entire data, without modifications, after the conditions are met. However, there might be cases where data must be modified or partially anonymized before it is allocated to the user. The data modification must be done before the permission to use the data is granted. This class of policy represents the Data Usage Control use cases demanding to modify the data in transit; a Data Usage Control technology intercepts the data that is transmitted and applies the modifications on them.
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF, validating that the data is actually anonymized is not possible right now.
@@ -798,7 +798,7 @@ In all aforementioned cases, the policies allow the users to use the entire data
 </div>
 </details>
 
-#### Modify data (in rest)
+#### 14. Modify data (in rest)
 This class of policy demands for the data modifications or anonymizations before the permission to use the data is granted. In contrast to the previous policy class, it demands the modifications to be done when data is stored in a database. The Data Consumer is only allowed to use the data after certain modifications have been applied to the stored data. 
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF, validating that the data is actually anonymized is not possible right now.
@@ -845,7 +845,7 @@ This class of policy demands for the data modifications or anonymizations before
 </div>
 </details>
 
-#### Log the data usage information
+#### 15. Log the data usage information
 The IDS Data Provider requests to log the information of transferring data from their sites to their Data Consumer sites. Although, logging the information is a part of the International Data Spaces infrastructure, a Data Usage Control technology can occasionally apply the logging policies to the systems and log the usage information locally, as well. For example, it might log the information about the data anonymizations. 
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF.
@@ -892,7 +892,7 @@ The IDS Data Provider requests to log the information of transferring data from 
 </div>
 </details>
 
-#### Notify a party or a specific group of users when the data is used
+#### 16. Notify a party or a specific group of users when the data is used
 The studies show that the International Data Spaces Data Providers request to be notified in a stated situation. For example, we can specify policies of this type to request to notify the Data Providers, when their data has left their sites or when it is delivered to the data consumers. The formats and possibilities of the notifications depends on which platform is used; whether it is the notification system of International Data Spaces or, for example, a mailing system. 
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF, executing the call to the notification endpoint is not supported.
@@ -952,7 +952,7 @@ The studies show that the International Data Spaces Data Providers request to be
 </div>
 </details>
 
-#### Attach policy when distribute the data to a third-party
+#### 17. Attach policy when distribute the data to a third-party
 An IDS Data Provider may specify additional data usage policies to be provided to the third parties. Here, the Data Consumer is obliged to pass the specified Data Usage Control policy to the third-party and demand for an agreement before further distributing the data.
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF
@@ -999,7 +999,7 @@ An IDS Data Provider may specify additional data usage policies to be provided t
 </div>
 </details>
 
-#### Distribute the data only if it is encrypted
+#### 18. Distribute the data only if it is encrypted
 In most of the cases, a Data Provider specifies a policy to give permission to one or more data consumers to use the data. Although, there might be cases in which the Data Consumer requires permission to further distribute the data to other users or third parties. This class of policy exclusively addresses the state of the Data Asset in case of sharing it. For example, you can specify a policy of this type to demand your Data Consumer to share your data only if it is encrypted.
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF, validating that the data is encrypted is not possible right now.
@@ -1046,7 +1046,7 @@ In most of the cases, a Data Provider specifies a policy to give permission to o
 </div>
 </details>
 
-#### Perpetual data sale restrictions
+#### 19. Perpetual data sale restrictions
 The IDS platform provides the possibility to the Data Providers to sell their Data Assets. A Data Consumer has to fulfill the conditions that are specified in a data sale contract in order to buy the Data Assets. For example, a one-time payment has to be made. This class of policy addresses the conditions that are associated to a data sale contract. 
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF, `ids:SalesAgreement` not recognized as well as validating that the payment has been done is not possible right now.
@@ -1124,7 +1124,7 @@ The IDS platform provides the possibility to the Data Providers to sell their Da
 </div>
 </details>
 
-#### Rental data restrictions
+#### 20. Rental data restrictions
 In contrary to the previous class of policy, this category addresses the conditions that are associated to a data rent contract. For example, a Data Usage Control technology has to check frequently whether the monthly fee which is specified in the contract is paid by the Data Consumer.
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF, `ids:RentalAgreement` not recognized as well as validating that the payment has been done is not possible right now.
@@ -1216,7 +1216,7 @@ In contrary to the previous class of policy, this category addresses the conditi
 </div>
 </details>
 
-#### Restrict the data usage to specific state
+#### 21. Restrict the data usage to specific state
 This category represents a condition in which the usage of data is restricted to a specific state. This condition refers to an environment state but not the state of the Data Asset. Therefore, it is about the state of the contract and the connectors. If the contract is terminated or if the firewall is activated are examples for this restriction. The state of the Data Consumer connector and the contract must be known by the Data Usage Control technology, so the application can check whether the condition is fulfilled and issue permission to the Data Consumer to use the Data Asset. 
 
 > _**NOTE**_: Not supported in the current form of the embedded PEF, the PIP interaction is not supported right now.

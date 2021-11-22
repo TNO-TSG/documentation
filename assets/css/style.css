@@ -579,6 +579,9 @@ h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
   margin-bottom: 0.5rem;
   padding: 0.25rem 1rem; }
 
+.doc-content *:not(p) + h2, .doc-content *:not(p) + h3, .doc-content *:not(p) + h4 {
+  padding-top: 1rem; }
+
 summary {
   color: #0f7ad4; }
   summary:hover {
@@ -1954,14 +1957,14 @@ select:hover {
   .tutorial .sidebar {
     display: block; } }
 
-h2 a.header-link, h3 a.header-link {
+h2 a.header-link, h3 a.header-link, h4 a.header-link {
   text-decoration: none;
   color: #ccc;
   opacity: 0;
   transition: opacity ease 0.2s, color ease 0.2s;
   vertical-align: bottom;
   margin: 0 0 0 5px; }
-  h2 a.header-link:hover, h3 a.header-link:hover {
+  h2 a.header-link:hover, h3 a.header-link:hover, h4 a.header-link:hover {
     color: #4a4a4a;
     opacity: 0.4;
     transition: opacity ease 0.2s, color ease 0.2s; }

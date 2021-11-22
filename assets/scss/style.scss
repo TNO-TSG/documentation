@@ -132,6 +132,9 @@ INDEX SASS
     margin-bottom: 0.5rem;
     padding: 0.25rem 1rem;
   }
+  *:not(p) + h2, *:not(p) + h3, *:not(p) + h4 {
+    padding-top: 1rem;
+  }
 }
 
 summary {
@@ -1800,7 +1803,7 @@ select:hover {
     display: block;
   }
 }
-h2 a.header-link, h3 a.header-link {
+h2 a.header-link, h3 a.header-link, h4 a.header-link {
   text-decoration: none;
   color: #ccc;
   opacity: 0;
