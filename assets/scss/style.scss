@@ -134,6 +134,13 @@ INDEX SASS
   }
 }
 
+summary {
+  color: lighten($hover-color, 20%);
+  &:hover {
+    color: $hover-color;
+  }
+}
+
 /**
 * ============================
 *  7.0 Header Area

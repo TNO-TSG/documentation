@@ -579,6 +579,11 @@ h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
   margin-bottom: 0.5rem;
   padding: 0.25rem 1rem; }
 
+summary {
+  color: #0f7ad4; }
+  summary:hover {
+    color: #084375; }
+
 /**
 * ============================
 *  7.0 Header Area
