@@ -32,7 +32,7 @@ If you are using Gradle you can import the Base Data App dependecy into your pro
     }
 
 ## Setting up the Application
-Building a Data App using the TNO Base Data App dependecy requires your application to use the Spring Boot framework https://spring.io/projects/spring-boot. You can setup a new Spring Boot application or use one of the existing Data Apps as a base. It is important that you annotate your Application class with the necesary annotations:
+Building a Data App using the TNO Base Data App dependecy requires your application to use the [Spring Boot framework](https://spring.io/projects/spring-boot). You can setup a new Spring Boot application or use one of the existing Data Apps as a base. It is important that you annotate your Application class with the necesary annotations:
 
     @SpringBootApplication(scanBasePackages = ["nl.tno.ids"])
     @ConfigurationPropertiesScan("nl.tno.ids")
@@ -56,6 +56,14 @@ The `scanBasePackages = ["nl.tno.ids"]` parameter of the `@SpringBootApplication
 | &nbsp;&nbsp;&nbsp;.modelVersion | String | `4.1.0` | Version of the IDS information model that this Data App supports |
 | &nbsp;&nbsp;&nbsp;.appId | Int | `data-app` | Data app identifier |
 
+## Publishing resources to the Security Gateway
+The Base Data App contains a resource publisher that can be used to publish exposed resources, such as API endpoints, to the Security Gateway. These resources can then be found by other participants in the Data Space as it will be included in the self description of the Security Gateway. The Resource Publisher is exposed via the Spring comonent `ResourcePublisher` and contains the following methods to (un)publish resources:
+- `publishResourceToCoreContainer(resource: Resource)`: Publish the IDS resource to the Security Gateway
+- `publishResourcesToCoreContainer(resources: List<Resource>)`: Publish a list of IDS resources to the Security Gateway
+- `unpublishResourceToCoreContainer(resourceId: String)`: Unpublish a resource with a given resource Id
+
+The Resource Publisher requires that the `core-container.resourcesEndpoint` configuration property is properly set. 
+
 ## Additional properties
 
 Additional Spring or Camel properties can be provided next to the Core Container properties. This can be used to configure the logging properties of the Core Container.
@@ -72,7 +80,7 @@ logging:
 Nulla faucibus luctus eros, sed iaculis erat vestibulum non. Morbi varius dictum erat sed varius. Aenean in dui nisi. Nunc feugiat a mauris non porttitor. Donec iaculis felis a ante fermentum fermentum. Cras tortor lacus, consequat ac mauris quis, sagittis aliquet est. Donec fermentum nec metus et iaculis. Mauris cursus molestie urna, id accumsan ipsum. Praesent urna justo, luctus vitae interdum at, aliquet non tellus.
 
 ## Non-Kotlin Data Apps
-Aenean eget dignissim ex, ac lacinia mi. Sed varius faucibus condimentum. Curabitur a malesuada mi. Suspendisse sed nunc nec ante sagittis placerat et quis sapien. Phasellus at efficitur enim, eget venenatis sem. Aliquam at euismod nisl, ut lacinia lorem. Quisque eu quam magna. Proin pretium, tellus nec efficitur fringilla, orci nisl mollis mi, eu ullamcorper erat nunc mollis risus.
-
-Cras non auctor risus. Mauris mauris arcu, ornare vitae justo id, mattis bibendum orci. Fusce velit nisl, euismod tincidunt purus at, placerat volutpat dui. In ornare, velit ut pretium euismod, purus ex scelerisque enim, eget fermentum elit enim at arcu. Ut mattis lorem et urna vehicula vehicula. Proin maximus magna tellus, nec ullamcorper leo tristique nec. Suspendisse interdum consequat justo, et imperdiet lectus interdum ut. Nullam leo lorem, sodales eu mi at, vehicula cursus arcu. Aliquam in quam id ipsum molestie ullamcorper. Phasellus ac metus a dolor pharetra hendrerit sit amet luctus tortor. Mauris ipsum tortor, cursus ut viverra sit amet, auctor nec nibh. Sed urna nibh, ultricies rutrum rutrum a, cursus vitae leo. Donec pharetra, velit nec tincidunt finibus, metus est gravida libero, sit amet imperdiet enim nulla ac massa.
+Currently, TNO only provides tools to easily make Data Apps in Kotlin. If you want to make a Data App in another programming language of your choice, then you will have to take care of the following:
+- Implement the [IDS information model](https://international-data-spaces-association.github.io/InformationModel/docs/index.html#), in particular, the different kinds of messages that your Data App needs to support. 
+- Define a Rest Controller that listens for messages from the Core Container. 
 
