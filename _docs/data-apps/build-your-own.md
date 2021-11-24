@@ -42,18 +42,31 @@ Building a Data App using the TNO Base Data App dependecy requires your applicat
         runApplication<Application>(*args)
     }
 
-The `scanBasePackages = ["nl.tno.ids"]` parameter of the `@SpringBootApplication` makes sure that Spring loads the necessary Spring components from the Base Data App dependecy. In particular, this makes sure that the Rest Controller that listens for HTTP Multipart requests from the Core container. The `@ConfigurationPropertiesScan("nl.tno.ids")` tells Spring to load and bind the required Base Data App configurations. The Base Data App expects an `application.yaml` or `application.properties` yaml file with the following properties:
+The `scanBasePackages = ["nl.tno.ids"]` parameter of the `@SpringBootApplication` makes sure that Spring loads the necessary Spring components from the Base Data App dependecy. In particular, this makes sure that the Rest Controller that listens for HTTP Multipart requests from the Core container is available. The `@ConfigurationPropertiesScan("nl.tno.ids")` tells Spring to load and bind the required Base Data App configurations. The Base Data App expects an `application.yaml` or `application.properties` yaml file with the following properties:
 
-core-container:
-  https-forward-endpoint: "test"
-ids:
-  connector-id: "id"
-  participant-id: "participant"
+| Configuration Key | Type (* required) | Default | Description |
+|---|---|---|---|---|
+| **core-container** |
+| &nbsp;&nbsp;&nbsp;.httpsForwardEndpoint | URL* | - | URL of the Security Gateway HTTPS endpoint for IDS multipart requests sent from the Data App, this is where outgoing messages will be forwarded to |
+| &nbsp;&nbsp;&nbsp;.idscpForwardEndpoint | URL | - | Same as .httpsForwardEndpoint but for IDSCP messages |
+| &nbsp;&nbsp;&nbsp;.resourcesEndpoint | URL | - | Core conrainer resources endpoint - where the Data App can publish resources to |
+| **IdsConfig** |
+| &nbsp;&nbsp;&nbsp;.connectorId | URI* | - | Connector IDS Identifier |
+| &nbsp;&nbsp;&nbsp;.participantId | URI* | - | Participant IDS Identifier |
+| &nbsp;&nbsp;&nbsp;.modelVersion | String | `4.1.0` | Version of the IDS information model that this Data App supports |
+| &nbsp;&nbsp;&nbsp;.appId | Int | `data-app` | Data app identifier |
 
+## Additional properties
+
+Additional Spring or Camel properties can be provided next to the Core Container properties. This can be used to configure the logging properties of the Core Container.
+
+For example, the following snippet can be added to the `application.yaml` to set the global logging level to `INFO` and the Core Container logging to debug:
+~~~ yaml
 logging:
   level:
-    root: DEBUG
-
+    root: INFO
+    nl.tno.ids: DEBUG
+~~~
 
 ## Packaging to Docker Images
 Nulla faucibus luctus eros, sed iaculis erat vestibulum non. Morbi varius dictum erat sed varius. Aenean in dui nisi. Nunc feugiat a mauris non porttitor. Donec iaculis felis a ante fermentum fermentum. Cras tortor lacus, consequat ac mauris quis, sagittis aliquet est. Donec fermentum nec metus et iaculis. Mauris cursus molestie urna, id accumsan ipsum. Praesent urna justo, luctus vitae interdum at, aliquet non tellus.
