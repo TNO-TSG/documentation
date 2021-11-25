@@ -83,4 +83,5 @@ Nulla faucibus luctus eros, sed iaculis erat vestibulum non. Morbi varius dictum
 Currently, TNO only provides tools to easily make Data Apps in Kotlin. If you want to make a Data App in another programming language of your choice, then you will have to take care of the following:
 - Implement the [IDS information model](https://international-data-spaces-association.github.io/InformationModel/docs/index.html#), in particular, the different kinds of messages that your Data App needs to support. 
 - Define a Rest Controller that listens for messages from the Core Container. 
+- Publish the available resources to the Security Gateway
 
