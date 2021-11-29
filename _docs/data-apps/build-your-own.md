@@ -6,25 +6,28 @@ left_menu: true
 slug: data-apps-build
 ---
 
-This document explains how to build your own Kotlin Data App and how to deploy it next to your TNO Security Gateway. TNO offers a Kotlin library to easily build your own Data Apps in Kotlin using Spring Boot. The Kotlin library defines everything you need. You only need to add the IDS message listeners for the particular message types that you want to handle in your Data App. 
+This document explains how to build your own Kotlin Data App and how to deploy it next to your TNO Security Gateway. TNO offers a Kotlin 'Base Data Appp' library to easily build your own Data Apps in Kotlin using Spring Boot. The Kotlin library defines everything you need. You only need to add the IDS message listeners for the particular message types that you want to handle in your Data App. 
 
 This guide assumes that you have some basic Kotlin experience. However, if you are well acquanted with Java you should be able to follow along. 
 
-## Overview
-> Figures & design
-
-![TNO Data App Architecture](/assets/images/drawio/data-app-architecture.drawio.svg)
-
-Fusce mollis est ipsum, eget condimentum magna ultricies nec. Vivamus non metus eros. Integer magna eros, ultricies a augue in, accumsan interdum est. Nam mi risus, malesuada eu mi id, semper pellentesque leo. Suspendisse sit amet metus vel lorem elementum condimentum at in nisl. Praesent gravida nunc sed orci sagittis, eu molestie nulla pellentesque. Integer tortor sem, pulvinar et aliquet nec, luctus nec purus. Phasellus ac mauris ac lorem sagittis tempus ac eu diam. Phasellus non eleifend augue. Nunc vulputate maximus mauris, ut posuere ante eleifend id. Suspendisse aliquet ipsum non lorem gravida, sed hendrerit mauris malesuada. Vestibulum sed elit id mi varius convallis. Nullam vulputate hendrerit dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-
 ## Prerequisites
 - Basic Kotlin experience (or experienced in Java)
-- Basic familiarity with the Spring Boot framework
+- Basic familiarity with the [Spring Boot framework](https://spring.io/projects/spring-boot)
 - Basic familiarity with Helm/Kubernetes, if you intend to use the recommended deployment method
 
+## Overview
+
+The 'Base Data App' library provided by TNO contains Spring components that you can use to quickly bootstrap your logic into an IDS based dataspace. The Base Data App provides the following functionality:
+- A Spring REST controller that listens for IDS messages from the TNO Security Gateway
+- A Message dispatcher that dispatches incoming messages to an available message listener 
+- A resource publisher that can be used to publish available resources, such as API endpoints, to the TNO Security Gateway
+- Helper functions to send IDS HTTP Multipart or IDSCP messages 
+
+The structure and interaction of the components of the Base Data App with the TNO Security Gateway is depicted in the diagram below:
+![TNO Data App Architecture](/assets/images/drawio/data-app-architecture.drawio.svg)
 
 ## Importing the Base Data App Dependecy
-The Base Data App is offered by the TNO IDS Maven repository as a Java dependecy that handles most of the IDS communication with the TNO Security Gateway for you. The TNO IDS Maven repository can be found at https://ci.ids.smart-connected.nl/nexus/repository/tno-ids/, the name of the Base Data App dependecy is 'base-data-app', the groupId is 'nl.tno.ids' and the most recent version is '4.1.1-SNAPSHOT'. The current version of the Base Data App supports the IDS Information Model version 4. 
+The Base Data App is offered by the TNO IDS Maven repository as a Kotlin dependecy. The TNO IDS Maven repository can be found at https://ci.ids.smart-connected.nl/nexus/repository/tno-ids/, the name of the Base Data App dependecy is 'base-data-app', the groupId is 'nl.tno.ids' and the most recent version is '4.1.1-SNAPSHOT'. The current version of the Base Data App supports the IDS Information Model version 4. 
 
 If you are using Gradle you can import the Base Data App dependecy into your project by putting the following code in your (Kotlin) build.gradle: 
 
@@ -58,6 +61,29 @@ The `scanBasePackages = ["nl.tno.ids"]` parameter of the `@SpringBootApplication
 | &nbsp;&nbsp;&nbsp;.modelVersion | String | `4.1.0` | Version of the IDS information model that this Data App supports |
 | &nbsp;&nbsp;&nbsp;.appId | Int | `data-app` | Data app identifier |
 
+## Sending messages to remote Connectors
+The Base Data App contains a `HttpHelper` Spring component that contains methods for either sending IDS HTTP multipart messages or IDSCP messages. You can use Spring to inject these components into your own classes and use them to send IDS messages to remote containers. For a list of message types you can send, check out [this page]({% link _docs/communication/ids-messages.md %}).
+
+### Sending IDS multipart messages
+The `HttpHelper` Spring component contains two overloaded methods to send IDS HTTP multipart messages:
+
+`fun toHTTP(receiver: String, header: Message, payload: Described?)`: Sends an IDS HTTP multipart message to the access url of the intended receiver, with the given IDS Message Header and described payload.
+
+`fun toHTTP(receiver: String, header: Message, payload: String?, contentType: ContentType = ContentType.APPLICATION_JSON)`: Sends an IDS HTTP multipart message to the access url of the intended receiver, with the given IDS Message Header and payload String using the given content type.
+
+Both methods return a HTTP status code along with the response.
+
+
+### Sending IDSCP messages
+The `HttpHelper` Spring component contains two overloaded methods to send IDSCP messages:
+
+`fun toIDSCP(receiver: String, header: Message, payload: Described?)`: Sends an IDSCP message to the access url of the intended receiver, with the given IDS Message Header and described payload.
+
+`fun toIDSCP(receiver: String, header: Message, payload: String?)`: Sends an IDSCP message to the access url of the intended receiver, with the given IDS Message Header and payload String
+
+Both methods return a HTTP status code along with the response.
+
+
 ## Publishing resources to the Security Gateway
 The Base Data App contains a resource publisher that can be used to publish exposed resources, such as API endpoints, to the Security Gateway. These resources can then be found by other participants in the Data Space as it will be included in the self description of the Security Gateway. The Resource Publisher is exposed via the Spring comonent `ResourcePublisher` and contains the following methods to (un)publish resources:
 - `publishResourceToCoreContainer(resource: Resource)`: Publish the IDS resource to the Security Gateway
@@ -78,11 +104,31 @@ logging:
     nl.tno.ids: DEBUG
 ~~~
 
-## Packaging to Docker Images
-Nulla faucibus luctus eros, sed iaculis erat vestibulum non. Morbi varius dictum erat sed varius. Aenean in dui nisi. Nunc feugiat a mauris non porttitor. Donec iaculis felis a ante fermentum fermentum. Cras tortor lacus, consequat ac mauris quis, sagittis aliquet est. Donec fermentum nec metus et iaculis. Mauris cursus molestie urna, id accumsan ipsum. Praesent urna justo, luctus vitae interdum at, aliquet non tellus.
+## Deployment
+The recommended deployment method by TNO is to deploy your Data App alongside the TNO Security Gateway using Kubernetes and Helm. Your Data App first needs to be packacged into a docker image. TNO recommends to use [Google Jib](https://github.com/GoogleContainerTools/jib) to automatically build the image in your build script. 
+
+Once your image is ready you can deploy your Data App alongside the TNO Security Gateway by adding it to the `containers` key of your TNO Security Gateway Helm script:
+
+    containers:
+        - type: data-app
+        image: image:tag
+        name: data-app-name
+        # .services is optional: if no services are defined here, the underlying Helm template will automatically expose a ClusterIP service on port 8080.
+        services:        
+        - port: 8080
+          name: http
+          # .nodePort is optional, if not given, ClusterIP is assumed.
+          nodePort: 12345
+        # config -- Data App Configuration. Will be inserted as the application.yaml of the Data App and therefore needs an equal structure
+        config:
+            testconfig:
+               key: value
+
+Deploying your Data App using another deployment strategy is currently not supported by TNO.
+
 
 ## Non-Kotlin Data Apps
-Currently, TNO only provides tools to easily make Data Apps in Kotlin. If you want to make a Data App in another programming language of your choice, then you will have to take care of the following:
+Currently, TNO only provides tools to  make Data Apps in Kotlin. If you want to make a Data App in another programming language of your choice, then you will have to take care of the following:
 - Implement the [IDS information model](https://international-data-spaces-association.github.io/InformationModel/docs/index.html#), in particular, the different kinds of messages that your Data App needs to support. 
 - Define a Rest Controller that listens for messages from the Core Container. 
 - Publish the available resources to the Security Gateway
