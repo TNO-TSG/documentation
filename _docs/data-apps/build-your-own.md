@@ -61,6 +61,23 @@ The `scanBasePackages = ["nl.tno.ids"]` parameter of the `@SpringBootApplication
 | &nbsp;&nbsp;&nbsp;.modelVersion | String | `4.1.0` | Version of the IDS information model that this Data App supports |
 | &nbsp;&nbsp;&nbsp;.appId | Int | `data-app` | Data app identifier |
 
+
+## Creating IDS message handlers
+The TNO Base Data App contains a Spring REST Controller that receives IDS messages from remote connectors. You can implement your own message listeners to handle the desired IDS message types of your own. Once you have implemented a message handler of a certain type, all messages of that type will be forwarded to that message handler by the REST controller. Message handlers can be created by writing a class that inherits from nl.tno.ids.base.MessageHandler. The MessageHandler interface has a handle function that should be overridden:
+
+    // Inherit from MessageHandler to register message handlers of a specific IDS message.
+    // Spring will register the Message Handler using Dependency Injection
+    @Component
+    class QueryMessageHandler(private val config: IdsConfig) : MessageHandler<QueryMessage> {
+        override fun handle(header: QueryMessage, payload: String?): ResponseEntity<*> {        
+            // Put your application logic based on the message here.
+            return ResponseEntity.ok()
+        }
+    }
+
+It is important to annotate the class with @Component, so that the custom message handler class can be registered by Spring.
+
+
 ## Sending messages to remote Connectors
 The Base Data App contains a `HttpHelper` Spring component that contains methods for either sending IDS HTTP multipart messages or IDSCP messages. You can use Spring to inject these components into your own classes and use them to send IDS messages to remote containers. For a list of message types you can send, check out [this page]({% link _docs/communication/ids-messages.md %}).
 
