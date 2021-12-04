@@ -6,7 +6,7 @@ left_menu: true
 slug: data-apps-build
 ---
 
-This document explains how to build your own Kotlin Data App and how to deploy it next to your TNO Security Gateway. TNO offers a Kotlin 'Base Data Appp' library to easily build your own Data Apps in Kotlin using Spring Boot. The Kotlin library defines everything you need. You only need to add the IDS message listeners for the particular message types that you want to handle in your Data App. 
+This document explains how to build your own Kotlin Data App and how to deploy it next to your TNO Core Container. TNO offers a Kotlin 'Base Data Appp' library to easily build your own Data Apps in Kotlin using Spring Boot. The Kotlin library defines everything you need. You only need to add the IDS message listeners for the particular message types that you want to handle in your Data App. 
 
 This guide assumes that you have some basic Kotlin experience. However, if you are well acquanted with Java you should be able to follow along. 
 
@@ -18,12 +18,12 @@ This guide assumes that you have some basic Kotlin experience. However, if you a
 ## Overview
 
 The 'Base Data App' library provided by TNO contains Spring components that you can use to quickly bootstrap your logic into an IDS based dataspace. The Base Data App provides the following functionality:
-- A Spring REST controller that listens for IDS messages from the TNO Security Gateway
+- A Spring REST controller that listens for IDS messages from the TNO Core Container
 - A Message dispatcher that dispatches incoming messages to an available message listener 
-- A resource publisher that can be used to publish available resources, such as API endpoints, to the TNO Security Gateway
+- A resource publisher that can be used to publish available resources, such as API endpoints, to the TNO Core Container
 - Helper functions to send IDS HTTP Multipart or IDSCP messages 
 
-The structure and interaction of the components of the Base Data App with the TNO Security Gateway is depicted in the diagram below:
+The structure and interaction of the components of the Base Data App with the TNO Core Container is depicted in the diagram below:
 ![TNO Data App Architecture](/assets/images/drawio/data-app-architecture.drawio.svg)
 
 ## Importing the Base Data App Dependecy
@@ -52,7 +52,7 @@ The `scanBasePackages = ["nl.tno.ids"]` parameter of the `@SpringBootApplication
 | Configuration Key | Type (* required) | Default | Description |
 |---|---|---|---|---|
 | **core-container** |
-| &nbsp;&nbsp;&nbsp;.httpsForwardEndpoint | URL* | - | URL of the Security Gateway HTTPS endpoint for IDS multipart requests sent from the Data App, this is where outgoing messages will be forwarded to |
+| &nbsp;&nbsp;&nbsp;.httpsForwardEndpoint | URL* | - | URL of the Core Container HTTPS endpoint for IDS multipart requests sent from the Data App, this is where outgoing messages will be forwarded to |
 | &nbsp;&nbsp;&nbsp;.idscpForwardEndpoint | URL | - | Same as .httpsForwardEndpoint but for IDSCP messages |
 | &nbsp;&nbsp;&nbsp;.resourcesEndpoint | URL | - | Core conrainer resources endpoint - where the Data App can publish resources to |
 | **IdsConfig** |
@@ -101,10 +101,10 @@ The `HttpHelper` Spring component contains two overloaded methods to send IDSCP 
 Both methods return a HTTP status code along with the response.
 
 
-## Publishing resources to the Security Gateway
-The Base Data App contains a resource publisher that can be used to publish exposed resources, such as API endpoints, to the Security Gateway. These resources can then be found by other participants in the Data Space as it will be included in the self description of the Security Gateway. The Resource Publisher is exposed via the Spring comonent `ResourcePublisher` and contains the following methods to (un)publish resources:
-- `publishResourceToCoreContainer(resource: Resource)`: Publish the IDS resource to the Security Gateway
-- `publishResourcesToCoreContainer(resources: List<Resource>)`: Publish a list of IDS resources to the Security Gateway
+## Publishing resources to the Core Container
+The Base Data App contains a resource publisher that can be used to publish exposed resources, such as API endpoints, to the Core Container. These resources can then be found by other participants in the Data Space as it will be included in the self description of the Core Container. The Resource Publisher is exposed via the Spring comonent `ResourcePublisher` and contains the following methods to (un)publish resources:
+- `publishResourceToCoreContainer(resource: Resource)`: Publish the IDS resource to the Core Container
+- `publishResourcesToCoreContainer(resources: List<Resource>)`: Publish a list of IDS resources to the Core Container
 - `unpublishResourceToCoreContainer(resourceId: String)`: Unpublish a resource with a given resource Id
 
 The Resource Publisher requires that the `core-container.resourcesEndpoint` configuration property is properly set. 
@@ -122,9 +122,9 @@ logging:
 ~~~
 
 ## Deployment
-The recommended deployment method by TNO is to deploy your Data App alongside the TNO Security Gateway using Kubernetes and Helm. Your Data App first needs to be packacged into a docker image. TNO recommends to use [Google Jib](https://github.com/GoogleContainerTools/jib) to automatically build the image in your build script. 
+The recommended deployment method by TNO is to deploy your Data App alongside the TNO Core Container using Kubernetes and Helm. Your Data App first needs to be packacged into a docker image. TNO recommends to use [Google Jib](https://github.com/GoogleContainerTools/jib) to automatically build the image in your build script. 
 
-Once your image is ready you can deploy your Data App alongside the TNO Security Gateway by adding it to the `containers` key of your TNO Security Gateway Helm script:
+Once your image is ready you can deploy your Data App alongside the TNO Core Container by adding it to the `containers` key of your TNO Core Container Helm script:
 
     containers:
         - type: data-app
@@ -148,5 +148,5 @@ Deploying your Data App using another deployment strategy is currently not suppo
 Currently, TNO only provides tools to  make Data Apps in Kotlin. If you want to make a Data App in another programming language of your choice, then you will have to take care of the following:
 - Implement the [IDS information model](https://international-data-spaces-association.github.io/InformationModel/docs/index.html#), in particular, the different kinds of messages that your Data App needs to support. 
 - Define a Rest Controller that listens for messages from the Core Container. 
-- Publish the available resources to the Security Gateway
+- Publish the available resources to the Core Container
 
