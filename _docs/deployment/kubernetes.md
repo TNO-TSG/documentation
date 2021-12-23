@@ -28,24 +28,32 @@ The TSG Helm charts use a couple of Kubernetes resources regularly of which a sh
 * [**Ingresses**](https://kubernetes.io/docs/concepts/services-networking/ingress/): Manage external access to Pods in the cluster, via primarily HTTP. Ingresses are closely related to [Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/), where the Ingress resource describes how information should be routed and the Ingress Controller actually handling these descriptions and routing traffic in the cluster.
 * [**Persistent Volume (Claims)**](https://kubernetes.io/docs/concepts/storage/persistent-volumes/): Manage persistent storage that can stays online when Pods are rescheduled or moved. `PersistentVolume`s are the actual provisioned storage in the cluster, while `PersistentVolumeClaim`s are the requests for storage by users.
 
-## Examples
+## Environments
+
+Since Kubernetes runs on a wide variety of environments, some examples how to get started are provided for different types of cloud environment.
+
+### Azure Kubernetes Service
+
+Deployment of TSG components on Azure is the current default method of deployment, without hard requirements to Azure.
+
+For a basic scenario the following components are required:
+* **Azure Kubernetes Service** (AKS): Information for [AKS](https://azure.microsoft.com/en-us/services/kubernetes-service) and the accompanying [tutorials](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal)
+* **Nginx Ingress Controller & Cert Manager**: Follow the [previous tutorial](https://github.com/MicrosoftDocs/azure-docs/blob/e64a0bb378c0279ed29361f196772e3af5be856c/articles/aks/ingress-tls.md), a newer version of this tutorial can be found on [https://docs.microsoft.com/en-us/azure/aks/ingress-tls](https://docs.microsoft.com/en-us/azure/aks/ingress-tls). But the older version is preferred for initial deployments as this doesn't use the [Azure Container Registry](https://azure.microsoft.com/en-us/services/container-registry/) which makes a clearer deployment.
+
+The recommended deployment uses an wildcard A record set to point to the Ingress Controller, which allows for dynamic addition of new Ingress resources on the subdomains covered by the wildcard.
+
+### Amazon Elastic Kubernetes Service
+
+Deployments of TSG components on [Elastic Kubernetes Service](https://aws.amazon.com/eks/) are also possible. By using a Network Load Balancer (NLB), a tutorial on how to set this up together with an Nginx Ingress Controller and  can be found [here](https://aws.amazon.com/blogs/containers/setting-up-end-to-end-tls-encryption-on-amazon-eks-with-the-new-aws-load-balancer-controller/).
+
+The structure that follows the Azure example after that, although specific annotations could be required for Ingress resources.
+
+### Rancher
+
+Deployments of TSG components on [Rancher](https://rancher.com/) are also possible. An example [tutorial](https://blog.weareopensource.me/rancher-lets-encrypt-set-up-with-ingress-nginx-cert-manager/) shows the deployment of an Nginx Ingress Controller with Cert Manager, but this depends on which version of Rancher you're using. Given the amount of flexibility of Rancher, a single tutorial that always works can't be provided. But there is a lot of information available, the most important components are the Nginx Ingress Controller and, if you'd want to use LetsEncrypt for TLS termination, Cert Manager.
+
 ### Docker-Desktop
 
 [Docker Desktop](https://www.docker.com/products/docker-desktop) has built in support for a [local Kubernetes cluster](https://docs.docker.com/desktop/kubernetes/). The TSG deployments do work on such a Docker Desktop environment.
 
 For exposing services on Docker Desktop, the `NodePort` service type is in most scenarios sufficient. Since the Docker Desktop cluster should be used for development only, as it is a single-node cluster without configuration options. Exposing services to outside of the machine, Ingress resources can be used in combination with a [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/#docker-desktop).
-
-### Azure Kubernetes Service
-
-Useful links:
-* Azure Kuberenetes service: https://azure.microsoft.com/en-us/services/kubernetes-service
-* NGINX Ingress Controller + Cert-Manager setup: https://docs.microsoft.com/en-us/azure/aks/ingress-tls, when not using Azure Container Registry you can use the [old version of this tutorial](https://github.com/MicrosoftDocs/azure-docs/blob/e64a0bb378c0279ed29361f196772e3af5be856c/articles/aks/ingress-tls.md)
-
-### Amazon Elastic Kubernetes Service
-
-
-Aenean eget dignissim ex, ac lacinia mi. Sed varius faucibus condimentum. Curabitur a malesuada mi. Suspendisse sed nunc nec ante sagittis placerat et quis sapien. Phasellus at efficitur enim, eget venenatis sem. Aliquam at euismod nisl, ut lacinia lorem. Quisque eu quam magna. Proin pretium, tellus nec efficitur fringilla, orci nisl mollis mi, eu ullamcorper erat nunc mollis risus.
-
-### Rancher
-
-Cras non auctor risus. Mauris mauris arcu, ornare vitae justo id, mattis bibendum orci. Fusce velit nisl, euismod tincidunt purus at, placerat volutpat dui. In ornare, velit ut pretium euismod, purus ex scelerisque enim, eget fermentum elit enim at arcu. Ut mattis lorem et urna vehicula vehicula. Proin maximus magna tellus, nec ullamcorper leo tristique nec. Suspendisse interdum consequat justo, et imperdiet lectus interdum ut. Nullam leo lorem, sodales eu mi at, vehicula cursus arcu. Aliquam in quam id ipsum molestie ullamcorper. Phasellus ac metus a dolor pharetra hendrerit sit amet luctus tortor. Mauris ipsum tortor, cursus ut viverra sit amet, auctor nec nibh. Sed urna nibh, ultricies rutrum rutrum a, cursus vitae leo. Donec pharetra, velit nec tincidunt finibus, metus est gravida libero, sit amet imperdiet enim nulla ac massa.

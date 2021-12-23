@@ -5,17 +5,26 @@ toc: true
 left_menu: true
 slug: communication-message-flows
 ---
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in suscipit odio, sed maximus eros. Curabitur sagittis, metus in mollis finibus, nibh sem aliquam purus, id varius ante arcu non mi. Vivamus sem sapien, dapibus vitae tempor eget, imperdiet id elit. Nam lacinia, arcu eu eleifend porttitor, risus purus venenatis magna, nec luctus massa ex eu orci. Pellentesque lectus sem, molestie eget aliquam sit amet, aliquet at augue. Nulla facilisi. Maecenas pellentesque odio non euismod efficitur. Phasellus ornare nec ligula eu dictum. Quisque eget posuere enim, nec fringilla mi.
+
+The message flows of the TSG components follow the IDS standard with the use of the IDS Information Model and message patterns described in the standard. This page shows a couple of examples of the most used message flows that cover the majority of interactions done by the TSG components.
 
 ## Overview
-> Message flows intro: self-description, broker, artifact request, data app interaction, policy negotiation, DAPS token request
 
+The message flows selected in this documentation are the following:
+* **Self Description interaction**: For retrieving the self description of a known connector without the usage of the IDS Metadata Broker.
+* **Broker interaction**: For interacting with the IDS Metadata Broker, both publishing self-descriptions and querying the Metadata Broker.
+* **Artifact interaction**: For interacting with the built-in artifact handling of the Core Container.
+* **Data App interaction**: For interaction between two connectors with Data Apps configured for handling messages.
+* **Policy Negotiation**: For interaction with the Policy Negotiation process in the Core Container.
+* **DAPS interaction**: For retrieval of Dynamic Attribute Tokens (DATs) that are required for communication between two IDS Connectors.
 
-
-Fusce mollis est ipsum, eget condimentum magna ultricies nec. Vivamus non metus eros. Integer magna eros, ultricies a augue in, accumsan interdum est. Nam mi risus, malesuada eu mi id, semper pellentesque leo. Suspendisse sit amet metus vel lorem elementum condimentum at in nisl. Praesent gravida nunc sed orci sagittis, eu molestie nulla pellentesque. Integer tortor sem, pulvinar et aliquet nec, luctus nec purus. Phasellus ac mauris ac lorem sagittis tempus ac eu diam. Phasellus non eleifend augue. Nunc vulputate maximus mauris, ut posuere ante eleifend id. Suspendisse aliquet ipsum non lorem gravida, sed hendrerit mauris malesuada. Vestibulum sed elit id mi varius convallis. Nullam vulputate hendrerit dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+These message flows are made specific for the TSG components, but follow the IDS standard that describes how two IDS Connectors exchange information between each other. The described flows are rather generic, especially the Data App interaction, that allow a lot of configurability and specialization to fit a wide variety of use cases.
 
 ## Self Description
-Aliquam viverra, nibh non finibus fermentum, felis velit aliquam ligula, eget condimentum enim enim a neque. Nunc orci augue, interdum eget nulla eu, sagittis commodo felis. Integer imperdiet egestas nibh, nec accumsan tortor sagittis a. Praesent ac ligula convallis ex rhoncus commodo vitae eget nibh. Sed nec fermentum odio, at mollis ipsum. Vestibulum consequat a odio eget pharetra. Aliquam nibh nisl, bibendum et accumsan vel, interdum eget neque. In hac habitasse platea dictumst.
+
+The TSG Core Container provides an entrypoint for receiving `DescriptionRequestMessage`s that indicate a request for information about this connector. This can be either the full self description of the connector, but it can also request a specific element of the self description by means of the `requestedElement` property in the `DescriptionRequestMessage`.
+
+The message flow shows both the usage of the user interface of the Core Container as the usage of an Data App to request the information. The first scenario is used to request information as a user to browse through the self description to see whether the connector has relevant information to offer. The latter scenario is intended to be used in an automated fashion, where the Data App requests additional information that it needs to properly format a "real" request to the other connector.
 
 <div class="mermaid">
 sequenceDiagram
@@ -44,9 +53,13 @@ sequenceDiagram
 </div>
 
 ## Broker
-Nulla faucibus luctus eros, sed iaculis erat vestibulum non. Morbi varius dictum erat sed varius. Aenean in dui nisi. Nunc feugiat a mauris non porttitor. Donec iaculis felis a ante fermentum fermentum. Cras tortor lacus, consequat ac mauris quis, sagittis aliquet est. Donec fermentum nec metus et iaculis. Mauris cursus molestie urna, id accumsan ipsum. Praesent urna justo, luctus vitae interdum at, aliquet non tellus.
+
+The Metadata Broker interactions are the primarily flows to enable the findability in the network, of both the Connectors themselves but also the resources that these Connectors provide in the network.
 
 ### Publish Self-Description
+
+The first Metadata Broker interaction is the publication of a self description at the Broker, to make this information accessible for other components in the network. It consists out of a `ConnectorUpdateMessage` that is sent to the Broker with its self description as payload of the message. The trigger for the Core Container to start this interaction is either a fixed time interval or a change event of the metadata coming from the `ResourceManager`.
+
 <div class="mermaid">
 sequenceDiagram
     participant TSG as TSG Core Container
@@ -67,6 +80,9 @@ sequenceDiagram
 </div>
 
 ### Broker Query
+
+The second Metadata Broker interaction is the querying of information at the Broker. Either done via the user interface of the core container or via an Data App, similar to the [Self Description](#self-description) flow. The message sent to the Broker is an `QueryMessage` with as payload an [SPARQL](https://www.w3.org/TR/rdf-sparql-query/) query. Since in most cases the intended result of a query is an Information Model object, the response is represented in JSON-LD format that can be parsed by the TSG components.
+
 <div class="mermaid">
 sequenceDiagram
     actor User
@@ -94,7 +110,8 @@ sequenceDiagram
 </div>
 
 ## Artifact Request
-Aenean eget dignissim ex, ac lacinia mi. Sed varius faucibus condimentum. Curabitur a malesuada mi. Suspendisse sed nunc nec ante sagittis placerat et quis sapien. Phasellus at efficitur enim, eget venenatis sem. Aliquam at euismod nisl, ut lacinia lorem. Quisque eu quam magna. Proin pretium, tellus nec efficitur fringilla, orci nisl mollis mi, eu ullamcorper erat nunc mollis risus.
+
+The Artifact request flow is the most simplistic way of exchanging information between two connectors by means of artifacts. The request follows the `ids:ArtifactRequestMessage` with the identifier of the intended artifact (`requestedArtifact`) with a response in the form of an `ids:ArtifactResponseMessage`. The TSG components assume a Base64 encoded string as the payload of such an `ids:ArtifactResponseMessage` to be able to handle binary files to be exchanged.
 
 <div class="mermaid">
 sequenceDiagram
@@ -118,7 +135,11 @@ sequenceDiagram
 </div>
 
 ## Data App interaction
-Nam congue rutrum posuere. Fusce cursus lacus nec dolor semper viverra. Quisque justo mi, hendrerit nec ex in, luctus sagittis quam. In odio dolor, tincidunt ut dolor sit amet, rhoncus dignissim velit. Nam a turpis id justo tempor dignissim ut et ex. Quisque tristique lectus a neque consectetur, vitae finibus enim vehicula. Curabitur nec hendrerit elit. Curabitur quis tortor et neque auctor varius. Donec hendrerit facilisis eros vel tincidunt. Fusce in leo urna. Sed at tempor ipsum, id dignissim orci. Proin maximus leo lacus, vel varius massa tempor at. Proin facilisis felis ut interdum malesuada.
+
+The Data App interaction is the most generic and versatile message flow, since the handling of the messages is done inside the Data Apps. The Core Container acts primarily as gateway for the message, while still checking the messages for Identification, Authentication, and Authorization purposes. The Data Apps can build in support for any of the IDS Messages described in [IDS Messages]({{ '/docs/communication-ids-messages' | relative_url }}) documentation.
+
+Examples of Data Apps can be found in the [Existing Apps]({{ '/docs/data-apps-existing' | relative_url }}) section.
+
 <div class="mermaid">
 sequenceDiagram
     participant DAC as Consumer Data App
@@ -145,9 +166,10 @@ sequenceDiagram
 </div>
 
 ## Policy Negotiation
-In efficitur feugiat augue nec malesuada. Vestibulum et scelerisque urna. Mauris magna nisl, pharetra id elementum ac, mattis a lorem. Proin vel mattis purus. Nullam laoreet augue eros, at facilisis eros blandit eu. Vivamus quis purus quis ipsum pellentesque pellentesque. Sed sit amet augue iaculis ipsum dignissim volutpat non id sapien. Donec et quam et diam tempus volutpat vel eu purus. Praesent ultrices augue odio, rhoncus convallis lacus fringilla vestibulum. In a facilisis tortor. Etiam vitae dolor et mauris lacinia vulputate. Etiam vitae mi eget est malesuada sollicitudin. Nulla at viverra est, in lobortis urna.
 
+The Policy Negotiation interaction shows the details of the process described in the [Policy Enforcement Framework]({{ '/docs/core-container-pef/#negotiation' | relative_url }}) section.
 
+In the message flow, a lot of alternatives are modelled. To show not only the happy flow scenarios, but also the scenarios where more information is required or the contract is rejected.
 
 <div class="mermaid">
 sequenceDiagram
@@ -192,7 +214,7 @@ sequenceDiagram
 
 ## DAPS Token Request
 
-Cras non auctor risus. Mauris mauris arcu, ornare vitae justo id, mattis bibendum orci. Fusce velit nisl, euismod tincidunt purus at, placerat volutpat dui. In ornare, velit ut pretium euismod, purus ex scelerisque enim, eget fermentum elit enim at arcu. Ut mattis lorem et urna vehicula vehicula. Proin maximus magna tellus, nec ullamcorper leo tristique nec. Suspendisse interdum consequat justo, et imperdiet lectus interdum ut. Nullam leo lorem, sodales eu mi at, vehicula cursus arcu. Aliquam in quam id ipsum molestie ullamcorper. Phasellus ac metus a dolor pharetra hendrerit sit amet luctus tortor. Mauris ipsum tortor, cursus ut viverra sit amet, auctor nec nibh. Sed urna nibh, ultricies rutrum rutrum a, cursus vitae leo. Donec pharetra, velit nec tincidunt finibus, metus est gravida libero, sit amet imperdiet enim nulla ac massa.
+The DAPS Token Request is the simplest interaction, but arguably one of the most important in the workings of a dataspace. As with this request a Dynamic Attribute Token (DAT) is requested that provides the trust and information needed for the Identification and Authentication processes. The DAT received from the Dynamic Attribute Provisioning Service (DAPS) is a verifiable claim of the DAPS that the claimed identity matches the requester accompanied with the dynamic attributes the DAPS knows of the identity.
 
 <div class="mermaid">
 sequenceDiagram

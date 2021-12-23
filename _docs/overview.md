@@ -7,102 +7,34 @@ slug: overview
 tags: documentation, overview
 ---
 
-Jekyll is a simple, blog-aware, static site generator. It takes a template directory containing raw text files in various formats, runs it through a converter (like Markdown) and our Liquid renderer, and spits out a complete, ready-to-publish static website suitable for serving with your favorite web server.
+This documentation provides information and insights into the different components of the TNO Security Gateway (TSG).
 
-If you already have a full Ruby development environment with all headers and RubyGems installed, you can create a new Jekyll site by doing the following:
+The TSG components allows you to participate in an IDS dataspace to exchange information with other organizations with data sovereignty in mind. You will be able to participate with the provided components as-is, but your allowed to modify the components to create your own dataspace with specific use-cases in mind. The source code is open-source with the Apache 2.0 license, and is available in the [TNO TSG](https://github.com/TNO-TSG) Github organization. 
 
-## How to install
+## Features
 
-~~~ bash
-# Install Jekyll and Bundler gems through RubyGems
-~ $ gem install jekyll bundler
+The main features of the TNO Security Gateway are of course the pilars of the [International Data Spaces](https://internationaldataspaces.org/) movement:
+* **Trust**: Trust is the basis of the International Data Spaces, by means of evaluation and certification before getting granted access to the dataspace.
+* **Security & Data Sovereignty**: Secure data exchanging with the certainty of remaining in control of your data, by means of security protocols and policy enforcement.
+* **Ecosystem of Data**: Decentralization is a key aspect of International Data Spaces, with the principle of keeping the data as close to the source as possible and only sharing it when explicitly allowed.
+* **Standardized Interoperability**: Standardized communication patterns between IDS Connectors allow the creation of different Connector implementations, of which the TSG is one.
+* **Value Adding Apps**: The ability to create a modular ecosystem in which value adding applications can be added on-demand to IDS connectors.
+* **Data Markets**: Data-driven services combined with the pilars above allow for new business models to thrive.
 
-# Create a new Jekyll site at ./myblog
-~ $ jekyll new myblog
+But next to these pilars, the TSG components have a unique set of features:
+* **Kubernetes support**: All of the TSG components are created with support for Kubernetes in mind, that make the deployments of components robust and allow for production-ready deployments.
+* **Abstractions of IDS specifics**: By means of specific Data Apps developed to enable the inclusion of existing systems.
+* **Embedded Policy Enforcement**: The TSG Core Container contains an embedded Policy Enforcement Framework that supports a variety of IDS Usage Policies.
+* **Easy Configuration**: The TSG components can be deployed in a wide variety of use cases, configuration of the components receives special care to prevent overwhelming configuration and allow the flexibility of the configuration.
 
-# Change into your new directory
-~ $ cd myblog
+## Getting started
 
-# Build the site on the preview server
-~/myblog $ bundle exec jekyll serve
+This documentation is aimed to support readers that want to get more information about IDS and TSG. Ranging from deploying existing component to information on how to create new functionality.
 
-# Now browse to http://localhost:4000
-~~~
+The [**Communication**]({{ '/docs/communication' | relative_url }}) page is the starting point to get more information on how information can be shared with the TSG components.
 
-## Next steps
+The [**Deployment**]({{ '/docs/deployment' | relative_url }}) page is the starting point if you want to deploy TSG and participate in a dataspace.
 
-Building a Jekyll site with the default theme is just the first step. The real magic happens when you start creating blog posts, using the front matter to control templates and layouts, and taking advantage of all the awesome configuration options Jekyll makes available.
+The [**Core Container**]({{ '/docs/core-container' | relative_url }}) page is the starting point for more information on the core component of the TSG, to get in-depth information on how to interact with the internal API and how to configure the Core Container.
 
-## Basic usage
-
-The Jekyll gem makes a `jekyll` executable available to you in your Terminal window. You can use this command in a number of ways:
-
-~~~ bash
-$ jekyll build
-# => The current folder will be generated into ./_site
-
-$ jekyll build --destination <destination>
-# => The current folder will be generated into <destination>
-
-$ jekyll build --source <source> --destination <destination>
-# => The <source> folder will be generated into <destination>
-
-$ jekyll build --watch
-# => The current folder will be generated into ./_site,
-#    watched for changes, and regenerated automatically.
-~~~
-
-## Directory structure
-
-Jekyll is, at its core, a text transformation engine. The concept behind the system is this: you give it text written in your favorite markup language, be that Markdown, Textile, or just plain HTML, and it churns that through a layout or a series of layout files. Throughout that process you can tweak how you want the site URLs to look, what data gets displayed in the layout, and more. This is all done through editing text files; the static web site is the final product.
-
-A basic Jekyll site usually looks something like this:
-
-~~~ bash
-.
-├── _config.yml
-├── _data
-|   └── members.yml
-├── _drafts
-|   ├── begin-with-the-crazy-ideas.md
-|   └── on-simplicity-in-technology.md
-├── _includes
-|   ├── footer.html
-|   └── header.html
-├── _layouts
-|   ├── default.html
-|   └── post.html
-├── _posts
-|   ├── 2007-10-29-page--nethack.md
-|   └── 2009-04-26-barcamp-boston-4-roundup.md
-├── _sass
-|   ├── _base.scss
-|   └── _layout.scss
-├── _site
-├── .jekyll-metadata
-└── index.html # comment example
-~~~
-
-## Front matter
-
-The front matter is where Jekyll starts to get really cool. Any file that contains a YAML front matter block will be processed by Jekyll as a special file. The front matter must be the first thing in the file and must take the form of valid YAML set between triple-dashed lines. Here is a basic example:
-
-~~~ html
----
-layout: post
-title: Blogging Like a Hacker
----
-~~~
-
-Between these triple-dashed lines, you can set predefined variables (see below for a reference) or even create custom ones of your own. These variables will then be available to you to access using Liquid tags both further down in the file and also in any layouts or includes that the page or post in question relies on.
-
-![Example image](https://images.unsplash.com/photo-1481487196290-c152efe083f5?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920&h=1080&fit=crop&s=80308172730757a7db0434987fa985f3)
-
-## Where additional pages live
-
-Where you put HTML or Markdown files for pages depends on how you want the pages to work. There are two main ways of creating pages:
-
-* Place named HTML or Markdown files for each page in your site’s root folder.
-* Place pages inside folders and subfolders named whatever you want.
-
-Both methods work fine (and can be used in conjunction with each other), with the only real difference being the resulting URLs. By default, pages retain the same folder structure in `_site` as they do in the source directory.
+The [**Data Apps**]({{ '/docs/core-container' | relative_url }}) page is the starting point for more information on the Data Apps and see which Data Apps are available and how you can create your own Data App to add functionality that is not provided by one of the existing Data Apps. 

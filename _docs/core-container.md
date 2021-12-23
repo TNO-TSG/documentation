@@ -9,7 +9,9 @@ slug: core-container
 The Core Container is the heart of the connector and provides the means for secure and sovereign data sharing. Its primary focus is to ensure the identification, authentication, and authorization mechanisms are in place. It also acts as router, by leveraging Apache Camel, to route messages to other components (e.g. Data Apps) and act as gateway for exchanging data with other components in a data space.
 
 ## Overview
-> TODO: Add figure
+
+![Core Container - Click to enlarge]({{"/assets/images/drawio/core-container.drawio.svg" | absolute_url}}){:.image-modal}
+<center><strong>Core Container</strong></center>
 
 The Core Container is built around the [Spring Boot framework](https://spring.io/projects/spring-boot) and [Apache Camel](https://camel.apache.org/). And is devided in sub-modules that each provide a part of the functionality of the core container.
 
@@ -323,8 +325,8 @@ To build execute (automatically pushes the image to the repository):
 
 > The default image name structure that is used is:
 > ~~~
-> `registry.ids.smart-connected.nl/core-container:{GIT_BRANCH_NAME}`
-> `registry.ids.smart-connected.nl/core-container:{GIT_BRANCH_NAME}-{BUILT_TIME}`
+> `docker.nexus.dataspac.es/core-container:{GIT_BRANCH_NAME}`
+> `docker.nexus.dataspac.es/core-container:{GIT_BRANCH_NAME}-{GIT_COMMIT_HASH}`
 > ~~~
 
 To build the image for local usage (requires a Docker daemon to be reachable):

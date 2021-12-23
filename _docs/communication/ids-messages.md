@@ -5,11 +5,17 @@ toc: true
 left_menu: true
 slug: communication-ids-messages
 ---
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in suscipit odio, sed maximus eros. Curabitur sagittis, metus in mollis finibus, nibh sem aliquam purus, id varius ante arcu non mi. Vivamus sem sapien, dapibus vitae tempor eget, imperdiet id elit. Nam lacinia, arcu eu eleifend porttitor, risus purus venenatis magna, nec luctus massa ex eu orci. Pellentesque lectus sem, molestie eget aliquam sit amet, aliquet at augue. Nulla facilisi. Maecenas pellentesque odio non euismod efficitur. Phasellus ornare nec ligula eu dictum. Quisque eget posuere enim, nec fringilla mi.
+
+The IDS Information Model provides an ontology for the description of metadata in the communication between IDS components. For the exchange of data between two connectors, the `ids:Message` concept is required to annotate the exchange with metedata about the exchange.
+
+The IDS Information Model ontology can be found on [Github](https://github.com/International-Data-Spaces-Association/InformationModel).
+
+The usage of these messages are described in [Message Flows]({{ '/docs/communication-message-flows/#policy-negotiation' | relative_url }}).
 
 ## Overview
-> IDS Messages: Request, Response, Notification
-> See [Information Model Message Descriptions v4.1.0](http://htmlpreview.github.io/?https://github.com/International-Data-Spaces-Association/InformationModel/blob/feature/message_taxonomy_description/model/communication/Message_Description.htm)
+The `ids:Message` class is divided into three groups of messages: Request Messages, Response Message, and Notification Messages. These groups all share a common set of properties that are present in all instantiations of the `ids:Message` class and provides generic meta information of the message.
+
+In the table below these properties are listed. Summarizing, the `issuerConnector`, `recipientConnector`, `senderAgent`, and `recipientAgent` properties provide information of the intended recipient and sender of the message. The `securityToken`, `authorizationToken`, and `transferContract` properties are related to Identification, Authentication, and Authorization concepts. The `modelVersion`, `issued`, `contentVersion` properties provide generic information of the data exchange.
 
 | Property | Cardinality | Description |
 | --- | --- | --- |
@@ -27,10 +33,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in suscipit odio
 
 <center><strong>ids:Message property overview</strong></center>
 
-Fusce mollis est ipsum, eget condimentum magna ultricies nec. Vivamus non metus eros. Integer magna eros, ultricies a augue in, accumsan interdum est. Nam mi risus, malesuada eu mi id, semper pellentesque leo. Suspendisse sit amet metus vel lorem elementum condimentum at in nisl. Praesent gravida nunc sed orci sagittis, eu molestie nulla pellentesque. Integer tortor sem, pulvinar et aliquet nec, luctus nec purus. Phasellus ac mauris ac lorem sagittis tempus ac eu diam. Phasellus non eleifend augue. Nunc vulputate maximus mauris, ut posuere ante eleifend id. Suspendisse aliquet ipsum non lorem gravida, sed hendrerit mauris malesuada. Vestibulum sed elit id mi varius convallis. Nullam vulputate hendrerit dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+For a complete overview of the different types of `ids:Message` classes and their accompanying properties, visit [Information Model Message Descriptions](http://htmlpreview.github.io/?https://github.com/International-Data-Spaces-Association/InformationModel/blob/feature/message_taxonomy_description/model/communication/Message_Description.htm). The remainder of this page is an representation of this overview, with additional information on different aspects of the classes and properties.
 
 ## Request Messages
-Aliquam viverra, nibh non finibus fermentum, felis velit aliquam ligula, eget condimentum enim enim a neque. Nunc orci augue, interdum eget nulla eu, sagittis commodo felis. Integer imperdiet egestas nibh, nec accumsan tortor sagittis a. Praesent ac ligula convallis ex rhoncus commodo vitae eget nibh. Sed nec fermentum odio, at mollis ipsum. Vestibulum consequat a odio eget pharetra. Aliquam nibh nisl, bibendum et accumsan vel, interdum eget neque. In hac habitasse platea dictumst.
+
+The first sub-class of messages are the `ids:RequestMessage`s, that act as requests in traditional request-response communication patterns. An `ids:RequestMessage` can be instantiated directly or one of the message types displayed in the table below can be used.
 
 | Message Class | Description | Additional Properties |
 |---|---|---|
@@ -49,8 +56,8 @@ Aliquam viverra, nibh non finibus fermentum, felis velit aliquam ligula, eget co
 <center><strong>ids:RequestMessage sub-classes</strong></center>
 
 ## Response Messages
-Nulla faucibus luctus eros, sed iaculis erat vestibulum non. Morbi varius dictum erat sed varius. Aenean in dui nisi. Nunc feugiat a mauris non porttitor. Donec iaculis felis a ante fermentum fermentum. Cras tortor lacus, consequat ac mauris quis, sagittis aliquet est. Donec fermentum nec metus et iaculis. Mauris cursus molestie urna, id accumsan ipsum. Praesent urna justo, luctus vitae interdum at, aliquet non tellus.
 
+The second sub-class of messages are the `ids:ResponseMessage`s, that act as responses to received requests. An `ids:ResponseMessage` must provide the `correlationMessage` property which references to the identifier of the received requests. An `ids:ResponseMessage` can be instantiated directly or one of the message types displayed in the table below can be used.
 
 | Message Class | Description | Additional Properties |
 |---|---|---|
@@ -74,7 +81,8 @@ Nulla faucibus luctus eros, sed iaculis erat vestibulum non. Morbi varius dictum
 > _Note: for all ids:ResponseMessage (sub)-classes the correlationMessage property, as described in ids:Message, is required._
 
 ## Notification Messages
-Aenean eget dignissim ex, ac lacinia mi. Sed varius faucibus condimentum. Curabitur a malesuada mi. Suspendisse sed nunc nec ante sagittis placerat et quis sapien. Phasellus at efficitur enim, eget venenatis sem. Aliquam at euismod nisl, ut lacinia lorem. Quisque eu quam magna. Proin pretium, tellus nec efficitur fringilla, orci nisl mollis mi, eu ullamcorper erat nunc mollis risus.
+
+The last sub-class of messages are the `ids:NotificationMessage`s, that act as notification without the requirement of receiving an response to the message. These messages are often used to indicate that a message is received properly or to send an update without explicit confirmations. An `ids:NotificationMessage` can be instantiated directly or one of the message types displayed in the table below can be used.
 
 | Message Class | Description | Additional Properties |
 |---|---|---|
@@ -103,6 +111,3 @@ Aenean eget dignissim ex, ac lacinia mi. Sed varius faucibus condimentum. Curabi
 | ParticipantCertificateUnavailableMessage | Indicates that a (previously certified) Participant is no more certified. This could happen, for instance, if the Certification Body revokes a granted certificate or if the certificate has just expired. | [`affectedParticipant` (1..1)](# "References the affected Participant of the notification") |
 
 <center><strong>ids:NotificationMessage sub-classes</strong></center>
-
-Cras non auctor risus. Mauris mauris arcu, ornare vitae justo id, mattis bibendum orci. Fusce velit nisl, euismod tincidunt purus at, placerat volutpat dui. In ornare, velit ut pretium euismod, purus ex scelerisque enim, eget fermentum elit enim at arcu. Ut mattis lorem et urna vehicula vehicula. Proin maximus magna tellus, nec ullamcorper leo tristique nec. Suspendisse interdum consequat justo, et imperdiet lectus interdum ut. Nullam leo lorem, sodales eu mi at, vehicula cursus arcu. Aliquam in quam id ipsum molestie ullamcorper. Phasellus ac metus a dolor pharetra hendrerit sit amet luctus tortor. Mauris ipsum tortor, cursus ut viverra sit amet, auctor nec nibh. Sed urna nibh, ultricies rutrum rutrum a, cursus vitae leo. Donec pharetra, velit nec tincidunt finibus, metus est gravida libero, sit amet imperdiet enim nulla ac massa.
-
