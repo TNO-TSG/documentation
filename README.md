@@ -16,6 +16,15 @@ Install `bundler`:
 gem install bundler
 ```
 
+Install npm dependencies:
+```bash
+npm install
+```
+
+Install bundle:
+```bash
+bundle install
+```
 
 ## Run locally
 
@@ -34,4 +43,4 @@ bundle exec jekyll serve
 ## Publishing the Documentation site
 
 The Jekyll page is automatically built and pushed to Github pages on commits to the `main` branch.
-At this moment changes to SASS & JS are not compiled by Github Pages, so before committing changes to SASS & JS files first run `npm run dev`.
+At this moment changes to SASS & JS are not compiled by Github Pages, so before committing changes to SASS & JS files first run `npm run dev`
